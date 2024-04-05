@@ -34,6 +34,10 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 # instead. If that file is not present, clang-tidy will be of limited help.
 set(CMAKE_C_CLANG_TIDY "clang-tidy")
 
+# Adding SDL2 and SDL package
+find_package(SDL2 REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS})
+
 # Include the source files.
 add_subdirectory(src)
 
