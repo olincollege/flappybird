@@ -1,12 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "constants.h"
 
 #include <SDL2/SDL.h>
-// #include "SDL2.h"
 
-SDL_Window* window = NULL;
-SDL_Renderer* renderer = NULL;
+#include "view.h"
+#include "controller.h"
+#include "model.h"
+
+// #include "model.c"
+// #include "controller.c"
+// #include  "view.c"
+
+// SDL_Window* window = NULL;
+// SDL_Renderer* renderer = NULL;
+// int running = NULL;
 
 int initialize_window(void) {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -36,7 +43,22 @@ int initialize_window(void) {
     return TRUE;
 }
 
+void update() {
+
+}
+
+void destroy_window() {
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+}
+
 int main() {
-    initialize_window();
+    running = initialize_window();
+    while (running == TRUE) {
+        process_input();
+        update();
+        render();
+    }
     return 0;
 }
