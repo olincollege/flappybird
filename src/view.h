@@ -1,3 +1,3 @@
 #include "model.h"
 
-void render();
+void render(GameState* gameState);

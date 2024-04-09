@@ -1,5 +1,5 @@
 #include "model.h"
 
-void process_input();
+void process_input(GameState* gameState);
 
 void jump();

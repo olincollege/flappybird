@@ -15,6 +15,10 @@
 // SDL_Renderer* renderer = NULL;
 // int running = NULL;
 
-extern SDL_Window* window;     // Declaration only
-extern SDL_Renderer* renderer; // Declaration only
-extern int running;           // Declaration only
+typedef struct GameState {
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+    int running;
+} GameState;
+
+// void initialize_game_state(GameState* gameState);
