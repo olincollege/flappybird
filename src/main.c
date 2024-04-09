@@ -9,7 +9,7 @@
 
 int initialize_window(void) {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-        fprintf(stderr, "Error initializing SDL.\n");
+        (void)fprintf(stderr, "Error initializing SDL.\n");
         return FALSE;
     }
     window = SDL_CreateWindow (
@@ -21,13 +21,13 @@ int initialize_window(void) {
         SDL_WINDOW_BORDERLESS
     );
     if  (!window) {
-        fprintf(stderr, "Error creating SDL Window\n");
+        (void)fprintf(stderr, "Error creating SDL Window\n");
         return FALSE;
     }
     printf("window created\n");
     renderer = SDL_CreateRenderer(window, -1, 0);
       if  (!renderer) {
-        fprintf(stderr, "Error creating SDL Renderer\n");
+        (void)fprintf(stderr, "Error creating SDL Renderer\n");
         return FALSE;
     }
     printf("renderer created\n");
