@@ -3,17 +3,9 @@
 
 #include <SDL2/SDL.h>
 
-#include "view.h"
 #include "controller.h"
 #include "model.h"
-
-// #include "model.c"
-// #include "controller.c"
-// #include  "view.c"
-
-// SDL_Window* window = NULL;
-// SDL_Renderer* renderer = NULL;
-// int running = NULL;
+#include "view.h"
 
 int initialize_window(void) {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {

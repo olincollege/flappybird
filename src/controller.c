@@ -1,5 +1,4 @@
 #include "controller.h"
-#include "model.h"
 
 void jump() {
 
