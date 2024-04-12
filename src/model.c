@@ -1,5 +1,7 @@
 #include "model.h"
 
-SDL_Window* window = NULL;
-SDL_Renderer* renderer = NULL;
-int running = FALSE;
+// void initialize_game_state(GameState* gameState) {
+//     gameState->window = NULL;  // Will be set when creating a window
+//     gameState->renderer = NULL; // Will be set when creating a renderer
+//     gameState->running = TRUE;  // Gamestate is now running
+// }
