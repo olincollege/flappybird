@@ -37,6 +37,8 @@ set(CMAKE_C_CLANG_TIDY "clang-tidy")
 # Adding SDL2 and SDL package
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
+# find_package(SDL2_image REQUIRED)
+# include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 
 # Include the source files.
 add_subdirectory(src)

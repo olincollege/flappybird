@@ -1,10 +1,13 @@
 #include "controller.h"
 
-void jump() {
-
+void jump(Bird* bird, Timer* timer) {
+    bird->jumpBool = TRUE;
+    timer->timerOn = TRUE;
+    timer->startTime = SDL_GetTicks();
+    timer->ms = 500;
 }
 
-void process_input(GameState* gameState) {
+void process_input(GameState* gameState, Bird* bird, Timer* timer) {
     SDL_Event event;
     SDL_PollEvent(&event);
     switch (event.type) {
@@ -18,7 +21,7 @@ void process_input(GameState* gameState) {
                     gameState->running = FALSE;
                     break;
                 case SDLK_SPACE:
-                    jump();
+                    jump(bird, timer);
                     break;
             }
             break;
