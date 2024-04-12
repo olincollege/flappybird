@@ -1,1 +1,0 @@
-/usr/bin/cc -Wall -Wextra -pedantic -Wconversion -Wdouble-promotion -Wduplicated-branches -Wduplicated-cond -Wimplicit-fallthrough -Wlogical-op -Wmisleading-indentation -Wnull-dereference -Wshadow -Wsign-conversion -Wunreachable-code -Wunused -g CMakeFiles/run_main.dir/main.c.o -o run_main  libmodel.a libview.a libcontroller.a -L/usr/lib/x86_64-linux-gnu  -lSDL2 
