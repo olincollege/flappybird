@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcontroller.a CMakeFiles/controller.dir/controller.c.o
+/usr/bin/ranlib libcontroller.a
