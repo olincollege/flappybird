@@ -8,11 +8,22 @@
 #include "view.h"
 
 GameState gameState;
+Bird bird;
+Timer timer;
 
 void initialize_game_state() {
     gameState.window = NULL;  // Will be set when creating a window
     gameState.renderer = NULL; // Will be set when creating a renderer
     gameState.running = TRUE;  // Gamestate is now running
+}
+
+void setup() {
+    bird.x = 20;
+    bird.y = 20;
+    bird.width = 15;
+    bird.height = 15;
+    bird.y_vel = 1;
+    bird.jumpBool = FALSE;
 }
 
 int initialize_window(void) {
@@ -46,7 +57,16 @@ int initialize_window(void) {
 }
 
 void update() {
+    if  (bird.jumpBool == TRUE) {
+        bird.y -= 1;
+    } else {
+        bird.y += GRAVITY;
+    }
 
+    if ((timer.timerOn == TRUE) && (SDL_GetTicks() - timer.startTime) > (timer.ms)) {
+        bird.jumpBool = FALSE;
+        timer.timerOn = FALSE;
+    }    
 }
 
 void destroy_window() {
@@ -63,11 +83,12 @@ void destroy_window() {
 
 int main() {
     initialize_game_state();
+    setup();
     gameState.running = initialize_window();
     while (gameState.running) {
-        process_input(&gameState); // Assume process_input now takes a pointer to gameState
+        process_input(&gameState, &bird, &timer); // Assume process_input now takes a pointer to gameState
         update();
-        render(&gameState);
+        render(&gameState, bird);
     }
     destroy_window();
     return 0;
