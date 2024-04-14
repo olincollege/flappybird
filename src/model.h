@@ -12,6 +12,12 @@
 
 #define GRAVITY 0.1
 
+#define BIRD_X_POS 20
+#define BIRD_Y_POS 20
+#define BIRD_WIDTH 15
+#define BIRD_HEIGHT 15
+#define BIRD_VEL 0.5
+
 // SDL_Window* window = NULL;
 // SDL_Renderer* renderer = NULL;
 // int running = NULL;
