@@ -4,7 +4,7 @@ void jump(Bird* bird, Timer* timer) {
     bird->jumpBool = TRUE;
     timer->timerOn = TRUE;
     timer->startTime = SDL_GetTicks();
-    timer->ms = 500;
+    timer->ms = TIME;
 }
 
 void process_input(GameState* gameState, Bird* bird, Timer* timer) {

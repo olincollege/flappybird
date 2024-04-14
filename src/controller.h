@@ -1,5 +1,7 @@
 #include "model.h"
 
+#define TIME 500
+
 /**
  * Handle user input
  *

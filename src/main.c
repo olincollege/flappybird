@@ -17,11 +17,11 @@ void initialize_game_state() {
 }
 
 void setup() {
-  bird.x = 20;
-  bird.y = 20;
-  bird.width = 15;
-  bird.height = 15;
-  bird.y_vel = 0.5;
+  bird.x = BIRD_X_POS;
+  bird.y = BIRD_Y_POS;
+  bird.width = BIRD_WIDTH;
+  bird.height = BIRD_HEIGHT;
+  bird.y_vel = BIRD_VEL;
   bird.jumpBool = FALSE;
 }
 
