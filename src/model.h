@@ -47,7 +47,7 @@ typedef struct Timer {
 } Timer;
 
 typedef struct Ground {
-    int x;
+    float x;
     float y;
     int width;
     int height;

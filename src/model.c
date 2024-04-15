@@ -35,7 +35,7 @@ void init_ground(Ground* ground, int width, int height) {
 
 void update_ground(GameState* gameState, Ground* ground) {
     // Move the ground to simulate motion, wrapping around the window
-    ground->x -= 2;
+    ground->x -= 0.5;
     if (ground->x + ground->width < 0) {
         ground->x = 0;
     }
