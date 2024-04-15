@@ -10,4 +10,4 @@
  * @param bird a copy of the instance of Bird
  */
 
-void render(GameState* gameState, Bird bird);
+void render(GameState* gameState, Bird bird, Ground ground);

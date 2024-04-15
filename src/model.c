@@ -25,3 +25,19 @@ void checkBoundaries(GameState* gameState, Bird bird) {
     gameState->running = FALSE;
   }
 }
+
+void init_ground(Ground* ground, int width, int height) {
+    ground->x = 0;
+    ground->y = WINDOW_HEIGHT - height;  // Position at bottom of the window
+    ground->width = WINDOW_WIDTH;        // Span the entire window width
+    ground->height = height;
+}
+
+void update_ground(GameState* gameState, Ground* ground) {
+    // Move the ground to simulate motion, wrapping around the window
+    ground->x -= 0.5;
+    if (ground->x + ground->width < 0) {
+        ground->x = 0;
+    }
+}
+

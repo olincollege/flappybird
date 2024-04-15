@@ -46,6 +46,13 @@ typedef struct Timer {
   int timerOn;
 } Timer;
 
+typedef struct Ground {
+    float x;
+    float y;
+    int width;
+    int height;
+} Ground;
+
 void update(Timer* timer, Bird* bird);
 
 /**
@@ -60,3 +67,8 @@ void update(Timer* timer, Bird* bird);
  * @param bird a copy of the Bird struct
  */
 void checkBoundaries(GameState* gameState, Bird bird);
+
+
+void init_ground(Ground* ground, int width, int height);
+
+void update_ground(GameState* gameState, Ground* ground);
