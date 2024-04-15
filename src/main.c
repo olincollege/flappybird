@@ -9,6 +9,7 @@
 GameState gameState;
 Bird bird;
 Timer timer;
+Ground ground;
 
 void initialize_game_state() {
   gameState.window = NULL;    // Will be set when creating a window
@@ -23,6 +24,8 @@ void setup() {
   bird.height = BIRD_HEIGHT;
   bird.y_vel = BIRD_VEL;
   bird.jumpBool = FALSE;
+
+  init_ground(&ground, WINDOW_WIDTH, 100);
 }
 
 int initialize_window(void) {
@@ -50,20 +53,6 @@ int initialize_window(void) {
   return TRUE;
 }
 
-// void update() {
-//   if (bird.jumpBool == TRUE) {
-//     bird.y -= 0.1;
-//   } else {
-//     bird.y += GRAVITY;
-//   }
-
-//   if ((timer.timerOn == TRUE) &&
-//       (SDL_GetTicks() - timer.startTime) > (timer.ms)) {
-//     bird.jumpBool = FALSE;
-//     timer.timerOn = FALSE;
-//   }
-// }
-
 void destroy_window() {
   if (gameState.renderer) {
     SDL_DestroyRenderer(gameState.renderer);
@@ -86,7 +75,8 @@ int main() {
         &timer);  // Assume process_input now takes a pointer to gameState
     update(&timer, &bird);
     checkBoundaries(&gameState, bird);
-    render(&gameState, bird);
+    update_ground(&gameState, &ground);  // Update the position of the ground
+    render(&gameState, bird, ground);  // Render bird and ground
   }
   destroy_window();
   return 0;
