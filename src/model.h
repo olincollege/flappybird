@@ -18,9 +18,9 @@
 #define BIRD_HEIGHT 15
 #define BIRD_VEL 0.5
 
-// SDL_Window* window = NULL;
-// SDL_Renderer* renderer = NULL;
-// int running = NULL;
+#define NUM_BLOCKS 12
+#define BLOCK_HEIGHT 50
+#define BLOCK_WIDTH 100
 
 // void initialize_game_state(GameState* gameState);
 typedef struct GameState {
@@ -46,12 +46,17 @@ typedef struct Timer {
   int timerOn;
 } Timer;
 
-typedef struct Ground {
+typedef struct GroundBlock {
     float x;
     float y;
     int width;
     int height;
+} GroundBlock;
+
+typedef struct Ground {
+    GroundBlock blocks[NUM_BLOCKS];  // Define NUM_BLOCKS based on your needs
 } Ground;
+
 
 void update(Timer* timer, Bird* bird);
 
@@ -69,6 +74,6 @@ void update(Timer* timer, Bird* bird);
 void checkBoundaries(GameState* gameState, Bird bird);
 
 
-void init_ground(Ground* ground, int width, int height);
+void init_ground(Ground* ground);
 
 void update_ground(GameState* gameState, Ground* ground);
