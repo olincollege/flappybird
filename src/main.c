@@ -10,6 +10,7 @@ GameState gameState;
 Bird bird;
 Timer timer;
 Ground ground;
+Pipes pipes;
 
 void initialize_game_state() {
   gameState.window = NULL;    // Will be set when creating a window
@@ -26,6 +27,7 @@ void setup() {
   bird.jumpBool = FALSE;
 
   init_ground(&ground);
+  init_pipes(&pipes);
 }
 
 int initialize_window(void) {
@@ -75,8 +77,9 @@ int main() {
         &timer);  // Assume process_input now takes a pointer to gameState
     update(&timer, &bird);
     checkBoundaries(&gameState, bird);
-    update_ground(&gameState, &ground);  // Update the position of the ground
-    render(&gameState, bird, ground);  // Render bird and ground
+    update_ground(&ground);  // Update the position of the ground
+    update_pipes(&pipes);
+    render(&gameState, bird, ground, pipes);  // Render bird and ground
   }
   destroy_window();
   return 0;
