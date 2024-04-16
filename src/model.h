@@ -7,7 +7,7 @@
 #define FALSE 0
 #define TRUE 1
 
-#define WINDOW_WIDTH 1000
+#define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 1000
 
 #define GRAVITY 0.1
@@ -21,6 +21,14 @@
 #define NUM_BLOCKS 12
 #define BLOCK_HEIGHT 50
 #define BLOCK_WIDTH 100
+
+#define NUM_PIPES 4
+#define PIPE_SPACING 300 // Constant space between pipes, adjust as needed
+#define PIPE_MOVEMENT_SPEED 0.1
+#define PIPE_GAP 400      // Vertical gap between pipes
+#define MIN_PIPE_HEIGHT 50 // Minimum height of the pipe parts
+#define PIPE_WIDTH 100
+
 
 // void initialize_game_state(GameState* gameState);
 typedef struct GameState {
@@ -57,6 +65,17 @@ typedef struct Ground {
     GroundBlock blocks[NUM_BLOCKS];  // Define NUM_BLOCKS based on your needs
 } Ground;
 
+typedef struct Pipe {
+    float x;
+    float topHeight;    // Height of the top pipe (bottom edge of the top pipe)
+    float bottomY;      // Y position of the bottom pipe's top edge
+    int width;
+    float gap; 
+} Pipe;
+
+typedef struct Pipes{
+    Pipe pipe[NUM_PIPES];
+} Pipes;
 
 void update(Timer* timer, Bird* bird);
 
@@ -76,4 +95,8 @@ void checkBoundaries(GameState* gameState, Bird bird);
 
 void init_ground(Ground* ground);
 
-void update_ground(GameState* gameState, Ground* ground);
+void update_ground( Ground* ground);
+
+void init_pipes(Pipes* pipes);
+
+void update_pipes(Pipes* pipes);
