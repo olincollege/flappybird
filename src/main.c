@@ -25,7 +25,7 @@ void setup() {
   bird.y_vel = BIRD_VEL;
   bird.jumpBool = FALSE;
 
-  init_ground(&ground, WINDOW_WIDTH, 100);
+  init_ground(&ground);
 }
 
 int initialize_window(void) {

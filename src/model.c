@@ -21,23 +21,28 @@ void update(Timer* timer, Bird* bird) {
 }
 
 void checkBoundaries(GameState* gameState, Bird bird) {
-  if ((bird.y <= 0) || (bird.y >= WINDOW_HEIGHT)) {
+  if ((bird.y <= 0) || (bird.y >= WINDOW_HEIGHT - BLOCK_HEIGHT)) {
     gameState->running = FALSE;
   }
 }
 
-void init_ground(Ground* ground, int width, int height) {
-    ground->x = 0;
-    ground->y = WINDOW_HEIGHT - height;  // Position at bottom of the window
-    ground->width = WINDOW_WIDTH;        // Span the entire window width
-    ground->height = height;
-}
-
-void update_ground(GameState* gameState, Ground* ground) {
-    // Move the ground to simulate motion, wrapping around the window
-    ground->x -= 0.5;
-    if (ground->x + ground->width < 0) {
-        ground->x = 0;
+void init_ground(Ground* ground) {
+    for (int i = 0; i < NUM_BLOCKS; i++) {
+        ground->blocks[i].x = i * BLOCK_WIDTH;
+        ground->blocks[i].y = WINDOW_HEIGHT - BLOCK_HEIGHT;
+        ground->blocks[i].width = BLOCK_WIDTH;
+        ground->blocks[i].height = BLOCK_HEIGHT;
+        // Optional: Set different colors or textures
     }
 }
 
+void update_ground(GameState* gameState, Ground* ground) {
+    for (int i = 0; i < NUM_BLOCKS; i++) {
+        ground->blocks[i].x -= 0.1;
+        if (ground->blocks[i].x + ground->blocks[i].width < 0) {
+            // Reposition to the right end
+            int next_index = (i == 0 ? NUM_BLOCKS - 1 : i - 1);
+            ground->blocks[i].x = ground->blocks[next_index].x + BLOCK_WIDTH;
+        }
+    }
+}
