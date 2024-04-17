@@ -55,6 +55,7 @@ void init_pipes(Pipes* pipes) {
         pipes->pipe[i].topHeight = (rand() % (WINDOW_HEIGHT - 2 * MIN_PIPE_HEIGHT - PIPE_GAP)) + MIN_PIPE_HEIGHT;
         pipes->pipe[i].bottomY = pipes->pipe[i].topHeight + PIPE_GAP;
         pipes->pipe[i].width = PIPE_WIDTH;
+        pipes->pipe[i].passed = FALSE;
     }
 }
 

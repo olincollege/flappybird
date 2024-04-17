@@ -35,6 +35,7 @@ typedef struct GameState {
   SDL_Window* window;
   SDL_Renderer* renderer;
   int running;
+  int score;
 } GameState;
 
 // bird struct
@@ -71,6 +72,7 @@ typedef struct Pipe {
     float bottomY;      // Y position of the bottom pipe's top edge
     int width;
     float gap; 
+    int passed;
 } Pipe;
 
 typedef struct Pipes{

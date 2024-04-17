@@ -16,6 +16,7 @@ void initialize_game_state() {
   gameState.window = NULL;    // Will be set when creating a window
   gameState.renderer = NULL;  // Will be set when creating a renderer
   gameState.running = TRUE;   // Gamestate is now running
+  gameState.score = 0;
 }
 
 void setup() {
@@ -80,6 +81,7 @@ int main() {
     update_ground(&ground);  // Update the position of the ground
     update_pipes(&pipes);
     pipe_collision(&gameState, bird, pipes);
+    update_score(&gameState, &pipes, bird);
     render(&gameState, bird, ground, pipes);  // Render bird and ground
   }
   destroy_window();

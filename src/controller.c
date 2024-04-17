@@ -63,3 +63,19 @@ void pipe_collision(GameState* gameState, Bird bird, Pipes pipes) {
         }
     }
 }
+
+void update_score(GameState* gameState, Pipes* pipes, Bird bird) {
+    for (int i = 0; i < NUM_PIPES; i++) {
+        // Check if the pipe is just passing the bird's x position
+        if (pipes->pipe[i].x + pipes->pipe[i].width < bird.x && !pipes->pipe[i].passed) {
+            gameState->score++;  // Increment score
+            pipes->pipe[i].passed = TRUE;  // Mark this pipe as passed
+        }
+
+        // Reset the pipe's passed flag if it has moved back to the right side of the screen
+        if (pipes->pipe[i].x > WINDOW_WIDTH) {
+            pipes->pipe[i].passed = FALSE;
+        }
+    }
+}
+
