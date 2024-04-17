@@ -29,3 +29,5 @@ void process_input(GameState* gameState, Bird* bird, Timer* timer);
 void jump(Bird* bird, Timer* timer);
 
 void pipe_collision(GameState* gameState, Bird bird, Pipes pipes);
+
+void update_score(GameState* gameState, Pipes* pipes, Bird bird);
