@@ -79,6 +79,7 @@ int main() {
     checkBoundaries(&gameState, bird);
     update_ground(&ground);  // Update the position of the ground
     update_pipes(&pipes);
+    pipe_collision(&gameState, bird, pipes);
     render(&gameState, bird, ground, pipes);  // Render bird and ground
   }
   destroy_window();

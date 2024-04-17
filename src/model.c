@@ -66,15 +66,6 @@ void update_pipes(Pipes* pipes) {
         if (pipes->pipe[i].x + pipes->pipe[i].width < 0) {
             int next_index = (i == NUM_PIPES - 1) ? 0 : i + 1;
             float rightMostX = pipes->pipe[next_index].x;
-
-            // // Find the right-most pipe x position to place this pipe after it
-            // for (int j = 0; j < NUM_PIPES; j++) {
-            //     if (pipes->pipe[j].x > rightMostX) {
-            //         rightMostX = pipes->pipe[j].x;
-            //     }
-            // }
-
-            // pipes->pipe[i].x = rightMostX + PIPE_SPACING;
             pipes->pipe[i].x = WINDOW_WIDTH;
             // Randomly re-generate the heights for the recycled pipe
             pipes->pipe[i].topHeight = (rand() % (WINDOW_HEIGHT - 2 * MIN_PIPE_HEIGHT - PIPE_GAP)) + MIN_PIPE_HEIGHT;

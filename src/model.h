@@ -18,7 +18,7 @@
 #define BIRD_HEIGHT 15
 #define BIRD_VEL 0.5
 
-#define NUM_BLOCKS 12
+#define NUM_BLOCKS 14
 #define BLOCK_HEIGHT 50
 #define BLOCK_WIDTH 100
 
