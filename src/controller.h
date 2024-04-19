@@ -27,3 +27,5 @@ void process_input(GameState* gameState, Bird* bird, Timer* timer);
  * @param timer a pointer to an instance of Timer
  */
 void jump(Bird* bird, Timer* timer);
+
+void start_game(GameState* gameState, Bird* bird, Pipes* pipes, Ground* ground, Timer* timer);
