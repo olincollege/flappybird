@@ -82,7 +82,7 @@ int main() {
     update_ground(&gameState, &ground);  // Update the position of the ground
     update_pipes(&gameState, &pipes);
     pipe_collision(&gameState, bird, pipes);
-    update_score(&gameState, &pipes, bird);
+    update_score(&gameState, &pipes, &bird);
     render(&gameState, bird, ground, pipes);  // Render bird and ground
   }
   destroy_window();

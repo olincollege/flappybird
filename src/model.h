@@ -10,7 +10,7 @@
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 1000
 
-#define GRAVITY 0.1
+#define GRAVITY 0.05
 #define START_GAMESPEED 0.1
 #define UPDATE_GAMESPEED 0.1
 
@@ -18,7 +18,7 @@
 #define BIRD_Y_POS 20
 #define BIRD_WIDTH 15
 #define BIRD_HEIGHT 15
-#define BIRD_VEL 0.5
+#define BIRD_VEL 0.1
 
 #define NUM_BLOCKS 14
 #define BLOCK_HEIGHT 50
@@ -107,6 +107,6 @@ void update_pipes(GameState* gameState, Pipes* pipes);
 
 void pipe_collision(GameState* gameState, Bird bird, Pipes pipes);
 
-void update_score(GameState* gameState, Pipes* pipes, Bird bird);
+void update_score(GameState* gameState, Pipes* pipes, Bird* bird);
 
-void increase_speed(GameState* gameState);
+void increase_speed(GameState* gameState, Bird* bird);

@@ -8,9 +8,9 @@
 
 void update(Timer* timer, Bird* bird) {
   if (bird->jumpBool == TRUE) {
-    bird->y -= 0.1;
+    bird->y -= bird->y_vel;
   } else {
-    bird->y += GRAVITY;
+    bird->y += GRAVITY + bird->y_vel;
   }
 
   if ((timer->timerOn == TRUE) &&
@@ -94,13 +94,13 @@ void pipe_collision(GameState* gameState, Bird bird, Pipes pipes) {
     }
 }
 
-void update_score(GameState* gameState, Pipes* pipes, Bird bird) {
+void update_score(GameState* gameState, Pipes* pipes, Bird* bird) {
     for (int i = 0; i < NUM_PIPES; i++) {
         // Check if the pipe is just passing the bird's x position
-        if (pipes->pipe[i].x + pipes->pipe[i].width < bird.x && !pipes->pipe[i].passed) {
+        if (pipes->pipe[i].x + pipes->pipe[i].width < bird->x && !pipes->pipe[i].passed) {
             gameState->score++;  // Increment score
             pipes->pipe[i].passed = TRUE;  // Mark this pipe as passed
-            increase_speed(gameState);
+            increase_speed(gameState, bird);
         }
 
         // Reset the pipe's passed flag if it has moved back to the right side of the screen
@@ -110,8 +110,9 @@ void update_score(GameState* gameState, Pipes* pipes, Bird bird) {
     }
 }
 
-void increase_speed(GameState* gameState) {
+void increase_speed(GameState* gameState, Bird* bird) {
   if (gameState->score % 2 == 0 && gameState->score != 0) {
     gameState->gameSpeedx += UPDATE_GAMESPEED;
+    bird->y_vel += UPDATE_GAMESPEED;
   }
 }
