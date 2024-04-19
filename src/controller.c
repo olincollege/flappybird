@@ -64,6 +64,30 @@ void pipe_collision(GameState* gameState, Bird bird, Pipes pipes) {
     }
 }
 
+// void pipe_collision(GameState* gameState, Bird bird, Pipes pipes) {
+//     for (int i = 0; i < NUM_PIPES; i++) {
+//         // Get pipe dimensions and positions
+//         int pipe_x = pipes.pipe[i].x;
+//         int pipe_top_height = pipes.pipe[i].topHeight;
+//         int pipe_bottom_y = pipes.pipe[i].bottomY;
+//         int pipe_width = pipes.pipe[i].width;
+
+//         // Check collision with top pipe
+//         if (bird.x < pipe_x + pipe_width && bird.x + bird.width > pipe_x &&
+//             bird.y < pipe_top_height && bird.y + bird.height > 0) {
+//             gameState->running = FALSE; // Collision with top pipe
+//             return;
+//         }
+
+//         // Check collision with bottom pipe
+//         if (bird.x < pipe_x + pipe_width && bird.x + bird.width > pipe_x &&
+//             bird.y < WINDOW_HEIGHT && bird.y + bird.height > pipe_bottom_y) {
+//             gameState->running = FALSE; // Collision with bottom pipe
+//             return;
+//         }
+//     }
+// }
+
 void update_score(GameState* gameState, Pipes* pipes, Bird bird) {
     for (int i = 0; i < NUM_PIPES; i++) {
         // Check if the pipe is just passing the bird's x position
