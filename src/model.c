@@ -36,9 +36,9 @@ void init_ground(Ground* ground) {
     }
 }
 
-void update_ground(Ground* ground) {
+void update_ground(GameState* gameState, Ground* ground) {
     for (int i = 0; i < NUM_BLOCKS; i++) {
-        ground->blocks[i].x -= 0.1;
+        ground->blocks[i].x -= gameState->gameSpeedx;
         if (ground->blocks[i].x + ground->blocks[i].width < 0) {
             // Reposition to the right end
             int next_index = (i == 0 ? NUM_BLOCKS - 1 : i - 1);
@@ -59,9 +59,9 @@ void init_pipes(Pipes* pipes) {
     }
 }
 
-void update_pipes(Pipes* pipes) {
+void update_pipes(GameState* gameState, Pipes* pipes) {
      for (int i = 0; i < NUM_PIPES; i++) {
-        pipes->pipe[i].x -= PIPE_MOVEMENT_SPEED;
+        pipes->pipe[i].x -= gameState->gameSpeedx;
 
         // Check if pipe has moved past the left edge of the screen
         if (pipes->pipe[i].x + pipes->pipe[i].width < 0) {
@@ -73,4 +73,45 @@ void update_pipes(Pipes* pipes) {
             pipes->pipe[i].bottomY = pipes->pipe[i].topHeight + PIPE_GAP;
         }
     }
+}
+
+void pipe_collision(GameState* gameState, Bird bird, Pipes pipes) {
+    // Define the rectangle for the bird
+    SDL_Rect bird_rect = {bird.x, (int)bird.y, bird.width, bird.height};
+
+    for (int i = 0; i < NUM_PIPES; i++) {
+        // Define the rectangle for the top part of the pipe
+        SDL_Rect pipe_top_rect = {pipes.pipe[i].x, 0, pipes.pipe[i].width, (int)pipes.pipe[i].topHeight};
+
+        // Define the rectangle for the bottom part of the pipe
+        SDL_Rect pipe_bottom_rect = {pipes.pipe[i].x, (int)pipes.pipe[i].bottomY, pipes.pipe[i].width, WINDOW_HEIGHT - (int)pipes.pipe[i].bottomY};
+
+        // Check if the bird collides with the top or bottom pipe
+        if (SDL_HasIntersection(&bird_rect, &pipe_top_rect) || SDL_HasIntersection(&bird_rect, &pipe_bottom_rect)) {
+            gameState->running = FALSE; // Collision detected, stop the game
+            return;
+        }
+    }
+}
+
+void update_score(GameState* gameState, Pipes* pipes, Bird bird) {
+    for (int i = 0; i < NUM_PIPES; i++) {
+        // Check if the pipe is just passing the bird's x position
+        if (pipes->pipe[i].x + pipes->pipe[i].width < bird.x && !pipes->pipe[i].passed) {
+            gameState->score++;  // Increment score
+            pipes->pipe[i].passed = TRUE;  // Mark this pipe as passed
+            increase_speed(gameState);
+        }
+
+        // Reset the pipe's passed flag if it has moved back to the right side of the screen
+        if (pipes->pipe[i].x > WINDOW_WIDTH) {
+            pipes->pipe[i].passed = FALSE;
+        }
+    }
+}
+
+void increase_speed(GameState* gameState) {
+  if (gameState->score % 2 == 0 && gameState->score != 0) {
+    gameState->gameSpeedx += UPDATE_GAMESPEED;
+  }
 }

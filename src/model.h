@@ -11,6 +11,8 @@
 #define WINDOW_HEIGHT 1000
 
 #define GRAVITY 0.1
+#define START_GAMESPEED 0.1
+#define UPDATE_GAMESPEED 0.1
 
 #define BIRD_X_POS 20
 #define BIRD_Y_POS 20
@@ -24,7 +26,6 @@
 
 #define NUM_PIPES 4
 #define PIPE_SPACING 300 // Constant space between pipes, adjust as needed
-#define PIPE_MOVEMENT_SPEED 0.1
 #define PIPE_GAP 400      // Vertical gap between pipes
 #define MIN_PIPE_HEIGHT 50 // Minimum height of the pipe parts
 #define PIPE_WIDTH 100
@@ -36,6 +37,7 @@ typedef struct GameState {
   SDL_Renderer* renderer;
   int running;
   int score;
+  float gameSpeedx;
 } GameState;
 
 // bird struct
@@ -97,8 +99,14 @@ void checkBoundaries(GameState* gameState, Bird bird);
 
 void init_ground(Ground* ground);
 
-void update_ground( Ground* ground);
+void update_ground(GameState* gameState, Ground* ground);
 
 void init_pipes(Pipes* pipes);
 
-void update_pipes(Pipes* pipes);
+void update_pipes(GameState* gameState, Pipes* pipes);
+
+void pipe_collision(GameState* gameState, Bird bird, Pipes pipes);
+
+void update_score(GameState* gameState, Pipes* pipes, Bird bird);
+
+void increase_speed(GameState* gameState);

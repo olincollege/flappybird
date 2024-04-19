@@ -17,6 +17,7 @@ void initialize_game_state() {
   gameState.renderer = NULL;  // Will be set when creating a renderer
   gameState.running = TRUE;   // Gamestate is now running
   gameState.score = 0;
+  gameState.gameSpeedx = START_GAMESPEED;
 }
 
 void setup() {
@@ -78,8 +79,8 @@ int main() {
         &timer);  // Assume process_input now takes a pointer to gameState
     update(&timer, &bird);
     checkBoundaries(&gameState, bird);
-    update_ground(&ground);  // Update the position of the ground
-    update_pipes(&pipes);
+    update_ground(&gameState, &ground);  // Update the position of the ground
+    update_pipes(&gameState, &pipes);
     pipe_collision(&gameState, bird, pipes);
     update_score(&gameState, &pipes, bird);
     render(&gameState, bird, ground, pipes);  // Render bird and ground
