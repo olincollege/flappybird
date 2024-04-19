@@ -11,3 +11,5 @@
  */
 
 void render(GameState* gameState, Bird bird, Ground ground, Pipes pipes);
+
+void render_start(GameState* gameState);

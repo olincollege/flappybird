@@ -1,10 +1,6 @@
 #include "model.h"
 
-// void initialize_game_state(GameState* gameState) {
-//     gameState->window = NULL;  // Will be set when creating a window
-//     gameState->renderer = NULL; // Will be set when creating a renderer
-//     gameState->running = TRUE;  // Gamestate is now running
-// }
+
 
 void update(Timer* timer, Bird* bird) {
   if (bird->jumpBool == TRUE) {
@@ -22,8 +18,17 @@ void update(Timer* timer, Bird* bird) {
 
 void checkBoundaries(GameState* gameState, Bird bird) {
   if ((bird.y <= 0) || (bird.y >= WINDOW_HEIGHT - BLOCK_HEIGHT)) {
-    gameState->running = FALSE;
+    gameState->playing = FALSE;
   }
+}
+
+void init_bird(Bird* bird) {
+    bird->x = BIRD_X_POS;
+    bird->y = BIRD_Y_POS;
+    bird->width = BIRD_WIDTH;
+    bird->height = BIRD_HEIGHT;
+    bird->y_vel = BIRD_VEL;
+    bird->jumpBool = FALSE;
 }
 
 void init_ground(Ground* ground) {
@@ -88,7 +93,7 @@ void pipe_collision(GameState* gameState, Bird bird, Pipes pipes) {
 
         // Check if the bird collides with the top or bottom pipe
         if (SDL_HasIntersection(&bird_rect, &pipe_top_rect) || SDL_HasIntersection(&bird_rect, &pipe_bottom_rect)) {
-            gameState->running = FALSE; // Collision detected, stop the game
+            gameState->playing = FALSE; // Collision detected, stop the game
             return;
         }
     }
@@ -115,4 +120,30 @@ void increase_speed(GameState* gameState, Bird* bird) {
     gameState->gameSpeedx += UPDATE_GAMESPEED;
     bird->y_vel += UPDATE_GAMESPEED;
   }
+}
+
+void reset(GameState* gameState, Bird* bird, Pipes* pipes, Ground* ground, Timer* timer) {
+    if (gameState-> score > gameState->highScore) {
+        gameState->highScore = gameState->score;
+    }
+    gameState->score = 0;
+    gameState->gameSpeedx = START_GAMESPEED;
+    setup(bird, ground, pipes);
+    timer->timerOn = FALSE;
+    gameState->playing = TRUE;
+}
+
+void setup(Bird* bird, Ground* ground, Pipes* pipes) {
+  init_bird(bird);
+  init_ground(ground);
+  init_pipes(pipes);
+}
+
+void initialize_game_state(GameState* gameState) {
+  gameState->window = NULL;    // Will be set when creating a window
+  gameState->renderer = NULL;  // Will be set when creating a renderer
+  gameState->running = TRUE;   // Gamestate is now running
+  gameState->score = 0;
+  gameState->gameSpeedx = START_GAMESPEED;
+  gameState->playing = FALSE;
 }

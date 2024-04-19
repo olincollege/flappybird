@@ -18,7 +18,7 @@
 #define BIRD_Y_POS 20
 #define BIRD_WIDTH 15
 #define BIRD_HEIGHT 15
-#define BIRD_VEL 0.1
+#define BIRD_VEL 0.15
 
 #define NUM_BLOCKS 14
 #define BLOCK_HEIGHT 50
@@ -38,6 +38,8 @@ typedef struct GameState {
   int running;
   int score;
   float gameSpeedx;
+  int playing;
+  int highScore;
 } GameState;
 
 // bird struct
@@ -110,3 +112,11 @@ void pipe_collision(GameState* gameState, Bird bird, Pipes pipes);
 void update_score(GameState* gameState, Pipes* pipes, Bird* bird);
 
 void increase_speed(GameState* gameState, Bird* bird);
+
+void reset(GameState* gameState, Bird* bird, Pipes* pipes, Ground* ground, Timer* timer);
+
+void init_bird(Bird* bird);
+
+void setup(Bird* bird, Ground* ground, Pipes* pipes);
+
+void initialize_game_state(GameState* gamteState);

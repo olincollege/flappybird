@@ -41,3 +41,12 @@ void render(GameState* gameState, Bird bird, Ground ground, Pipes pipes) {
 
     SDL_RenderPresent(gameState->renderer);
 }
+
+void render_start(GameState* gameState) {
+    SDL_SetRenderDrawColor(gameState->renderer, RED);
+    SDL_RenderClear(gameState->renderer);
+    SDL_RenderPresent(gameState->renderer);
+
+
+
+}
