@@ -50,6 +50,6 @@ void jump(Bird* bird, Timer* timer) {
     bird->jumpBool = TRUE;
     timer->timerOn = TRUE;
     timer->startTime = SDL_GetTicks();
-    timer->ms = TIME;
+    timer->ms = JUMP_TIME;
   }
 }

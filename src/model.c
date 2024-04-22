@@ -1,9 +1,13 @@
 #include "model.h"
 
+// Initial vertical velocity of the bird, controls how fast it rises on a jump.
 const float BIRD_VEL = (float)0.15;
 
+// Acceleration due to "gravity", applies a downward force to the bird's flight.
 const float GRAVITY = (float)0.05;
+// Initial horizontal speed of the game (i.e., speed of moving obstacles).
 const float START_GAMESPEED = (float)0.1;
+// Incremental increase in game speed each time a new point is scored.
 const float UPDATE_GAMESPEED = (float)0.1;
 
 void init_gameState(GameState* gameState) {

@@ -1,6 +1,10 @@
 #include "model.h"
 
-enum { TIME = 500 };  // Time in milliseconds for how long each jump lasts
+// Enumerations for game timing configurations
+enum {
+  JUMP_TIME = 500  // Duration in milliseconds that each jump lasts
+};
+
 /**
  * Handles the initial game setup and the transition from the start menu to the
  * game.
