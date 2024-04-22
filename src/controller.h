@@ -1,31 +1,80 @@
 #include "model.h"
 
-#define TIME 500
+#define TIME 500  // Time in milliseconds for how long each jump lasts
 
 /**
- * Handle user input
+ * Processes user inputs to control the game state and the bird's movement.
  *
- * This function handles user input, specifically, keyboard clicks. If the user
- * presses the escape key, it sets gameState->running to FALSE, and the window
- * is closed. If the user presses the space key, it calls jump(), which further
- * handles that event.
+ * This function listens for SDL events and applies game logic based on user
+ * inputs:
+ * - 'SDL_QUIT' or 'ESCAPE' key: Exits the game by setting `running` and
+ * `playing` to FALSE.
+ * - 'SPACE' key: Initiates a jump action for the bird if not already jumping.
  *
- * @param gameState a pointer to an instance of GameState
- * @param bird a pointer to an instance of Bird
- * @param timer a pointer to an instance of Timer
+ * @param gameState A pointer to the GameState to update the game's status.
+ * @param bird A pointer to the Bird object to potentially initiate a jump.
+ * @param timer A pointer to the Timer used to manage jump timing.
  */
 void process_input(GameState* gameState, Bird* bird, Timer* timer);
 
 /**
- * Cause the bird to move up
+ * Causes the bird to jump if not already in the middle of a jump.
  *
- * When called, bird.jumpBool is set to true, a timer is started, and the max
- * number of milliseconds to wait is set. This allows the update function to
- * move the bird up by a set number.
+ * This function triggers a jump by setting the bird's `jumpBool` to TRUE,
+ * marking the timer as active, and setting the start time to the current tick
+ * count. The jump affects the bird's vertical movement in the update function.
  *
- * @param bird a pointer to an instance of Bird
- * @param timer a pointer to an instance of Timer
+ * @param bird A pointer to the Bird structure to modify its jumping state.
+ * @param timer A pointer to the Timer structure to start the jump timing.
  */
 void jump(Bird* bird, Timer* timer);
 
-void start_game(GameState* gameState, Bird* bird, Pipes* pipes, Ground* ground, Timer* timer);
+/**
+ * Handles the initial game setup and the transition from the start menu to the
+ * game.
+ *
+ * This function waits for a 'SPACE' key press to begin the game from the start
+ * state, setting up the game elements using `reset`. It also handles the
+ * 'SDL_QUIT' and 'ESCAPE' keys to quit the game.
+ *
+ * @param gameState A pointer to the GameState to update the running state and
+ * possibly start the game.
+ * @param bird A pointer to the Bird to be reset for game start.
+ * @param pipes A pointer to the Pipes to be reset for game start.
+ * @param ground A pointer to the Ground to be reset for game start.
+ * @param timer A pointer to the Timer to be reset for game start.
+ */
+void start_game(GameState* gameState, Bird* bird, Pipes* pipes, Ground* ground,
+                Timer* timer);
+
+// /**
+//  * Handle user input
+//  *
+//  * This function handles user input, specifically, keyboard clicks. If the
+//  user
+//  * presses the escape key, it sets gameState->running to FALSE, and the
+//  window
+//  * is closed. If the user presses the space key, it calls jump(), which
+//  further
+//  * handles that event.
+//  *
+//  * @param gameState a pointer to an instance of GameState
+//  * @param bird a pointer to an instance of Bird
+//  * @param timer a pointer to an instance of Timer
+//  */
+// void process_input(GameState* gameState, Bird* bird, Timer* timer);
+
+// /**
+//  * Cause the bird to move up
+//  *
+//  * When called, bird.jumpBool is set to true, a timer is started, and the max
+//  * number of milliseconds to wait is set. This allows the update function to
+//  * move the bird up by a set number.
+//  *
+//  * @param bird a pointer to an instance of Bird
+//  * @param timer a pointer to an instance of Timer
+//  */
+// void jump(Bird* bird, Timer* timer);
+
+// void start_game(GameState* gameState, Bird* bird, Pipes* pipes, Ground*
+// ground, Timer* timer);
