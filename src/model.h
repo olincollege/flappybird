@@ -4,31 +4,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define FALSE 0
-#define TRUE 1
+typedef enum { FALSE, TRUE } Boolean;
 
-#define WINDOW_WIDTH 1200
-#define WINDOW_HEIGHT 1000
+enum { WINDOW_WIDTH = 1200, WINDOW_HEIGHT = 1000 };
 
-#define GRAVITY 0.05
-#define START_GAMESPEED 0.1
-#define UPDATE_GAMESPEED 0.1
+enum { BIRD_X_POS = 20, BIRD_Y_POS = 20, BIRD_WIDTH = 15, BIRD_HEIGHT = 15 };
 
-#define BIRD_X_POS 20
-#define BIRD_Y_POS 20
-#define BIRD_WIDTH 15
-#define BIRD_HEIGHT 15
-#define BIRD_VEL 0.15
+enum { NUM_BLOCKS = 14, BLOCK_HEIGHT = 50, BLOCK_WIDTH = 100 };
 
-#define NUM_BLOCKS 14
-#define BLOCK_HEIGHT 50
-#define BLOCK_WIDTH 100
+enum {
+  NUM_PIPES = 4,
+  PIPE_SPACING = 300,    // Constant space between pipes, adjust as needed
+  PIPE_GAP = 400,        // Vertical gap between pipes
+  MIN_PIPE_HEIGHT = 50,  // Minimum height of the pipe parts
+  PIPE_WIDTH = 100
+};
 
-#define NUM_PIPES 4
-#define PIPE_SPACING 300    // Constant space between pipes, adjust as needed
-#define PIPE_GAP 400        // Vertical gap between pipes
-#define MIN_PIPE_HEIGHT 50  // Minimum height of the pipe parts
-#define PIPE_WIDTH 100
+extern const float BIRD_VEL;
+
+extern const float GRAVITY;
+extern const float START_GAMESPEED;
+extern const float UPDATE_GAMESPEED;
 
 typedef struct GameState {
   SDL_Window* window;
@@ -82,6 +78,17 @@ typedef struct Pipes {
 } Pipes;
 
 /**
+ * Initialize the game state with default values.
+ *
+ * Sets initial values for the game state, including score, game speed, and the
+ * running state. Sets the window and renderer pointers to NULL which
+ * will be assigned when the SDL window and renderer are set up.
+ *
+ * @param gameState A pointer to the GameState structure to be initialized.
+ */
+void init_gameState(GameState* gameState);
+
+/**
  * Initialize the bird structure with default values.
  *
  * This function sets the initial position, dimensions, and velocity of the
@@ -127,8 +134,8 @@ void init_pipes(Pipes* pipes);
  * @param ground A pointer to the Ground structure.
  * @param timer A pointer to the Timer structure.
  */
-void reset(GameState* gameState, Bird* bird, Pipes* pipes, Ground* ground,
-           Timer* timer);
+void reset_gameplay(GameState* gameState, Bird* bird, Pipes* pipes,
+                    Ground* ground, Timer* timer);
 
 /**
  * Setup the initial game configuration.
@@ -140,7 +147,7 @@ void reset(GameState* gameState, Bird* bird, Pipes* pipes, Ground* ground,
  * @param ground A pointer to the Ground structure.
  * @param pipes A pointer to the Pipes structure.
  */
-void setup(Bird* bird, Ground* ground, Pipes* pipes);
+void setup_inits(Bird* bird, Ground* ground, Pipes* pipes);
 
 /**
  * Update the bird's position based on its velocity and gravity.
@@ -152,19 +159,7 @@ void setup(Bird* bird, Ground* ground, Pipes* pipes);
  * @param bird A pointer to the Bird whose position and velocity are to be
  * updated.
  */
-void update(Timer* timer, Bird* bird);
-
-/**
- * Ensure the bird does not exit the game area.
- *
- * This function checks if the bird has collided with the top or bottom
- * boundaries of the window. If a collision is detected, the game state is set
- * to not playing indicating that the game is over.
- *
- * @param gameState A pointer to the GameState.
- * @param bird The Bird structure to check for boundary collisions.
- */
-void checkBoundaries(GameState* gameState, Bird bird);
+void update_bird(Timer* timer, Bird* bird);
 
 /**
  * Update the position of all ground blocks to simulate movement.
@@ -193,6 +188,33 @@ void update_ground(GameState* gameState, Ground* ground);
 void update_pipes(GameState* gameState, Pipes* pipes);
 
 /**
+ * Update the game score based on bird and pipe positions.
+ *
+ * As the bird passes each pipe, this function increments the score. If the
+ * score reaches a certain threshold, it also triggers a speed increase. This
+ * function is critical for scoring and game progression.
+ *
+ * @param gameState A pointer to the GameState to update the score.
+ * @param pipes A pointer to the Pipes structure to determine if the bird has
+ * passed a pipe.
+ * @param bird A pointer to the Bird structure to check its position relative to
+ * the pipes.
+ */
+void update_score(GameState* gameState, Pipes* pipes, Bird* bird);
+
+/**
+ * Ensure the bird does not exit the game area.
+ *
+ * This function checks if the bird has collided with the top or bottom
+ * boundaries of the window. If a collision is detected, the game state is set
+ * to not playing indicating that the game is over.
+ *
+ * @param gameState A pointer to the GameState.
+ * @param bird The Bird structure to check for boundary collisions.
+ */
+void check_boundaries(GameState* gameState, Bird bird);
+
+/**
  * Detect collisions between the bird and pipes.
  *
  * This function checks for intersections between the bird's rectangle and the
@@ -210,21 +232,6 @@ void update_pipes(GameState* gameState, Pipes* pipes);
 void pipe_collision(GameState* gameState, Bird bird, Pipes pipes);
 
 /**
- * Update the game score based on bird and pipe positions.
- *
- * As the bird passes each pipe, this function increments the score. If the
- * score reaches a certain threshold, it also triggers a speed increase. This
- * function is critical for scoring and game progression.
- *
- * @param gameState A pointer to the GameState to update the score.
- * @param pipes A pointer to the Pipes structure to determine if the bird has
- * passed a pipe.
- * @param bird A pointer to the Bird structure to check its position relative to
- * the pipes.
- */
-void update_score(GameState* gameState, Pipes* pipes, Bird* bird);
-
-/**
  * Increase the game's difficulty by speeding up the game elements.
  *
  * This function increases the horizontal speed of game elements and the bird's
@@ -236,14 +243,3 @@ void update_score(GameState* gameState, Pipes* pipes, Bird* bird);
  * increased.
  */
 void increase_speed(GameState* gameState, Bird* bird);
-
-/**
- * Initialize the game state with default values.
- *
- * Sets initial values for the game state, including score, game speed, and the
- * running state. Sets the window and renderer pointers to NULL which
- * will be assigned when the SDL window and renderer are set up.
- *
- * @param gameState A pointer to the GameState structure to be initialized.
- */
-void initialize_game_state(GameState* gameState);

@@ -28,8 +28,8 @@ Pipes pipes;
  */
 int main() {
   // Initialize game state and game elements
-  initialize_game_state(&gameState);
-  setup(&bird, &ground, &pipes);
+  init_gameState(&gameState);
+  setup_inits(&bird, &ground, &pipes);
 
   // Initialize window and renderer, check for initialization success
   gameState.running = initialize_window(&gameState);
@@ -37,7 +37,7 @@ int main() {
   // Main game loop: runs until 'running' is FALSE
   while (gameState.running == TRUE) {
     // Handle the start of the game, waiting for user to commence playing
-    start_game(&gameState, &bird, &pipes, &ground, &timer);
+    process_input_start(&gameState, &bird, &pipes, &ground, &timer);
 
     // Render start screen if not playing
     if (gameState.playing == FALSE) {
@@ -47,13 +47,14 @@ int main() {
     // Gameplay loop: runs until 'playing' is FALSE
     while (gameState.playing == TRUE) {
       // Process user input (e.g., jumping and quitting)
-      process_input(&gameState, &bird, &timer);
+      process_input_gameplay(&gameState, &bird, &timer);
 
       // Update game elements
-      update(&timer,
-             &bird);  // Update bird's position based on jumping and gravity
-      checkBoundaries(&gameState,
-                      bird);  // Check for collisions with the screen edges
+      update_bird(
+          &timer,
+          &bird);  // Update bird's position based on jumping and gravity
+      check_boundaries(&gameState,
+                       bird);  // Check for collisions with the screen edges
       update_ground(&gameState,
                     &ground);  // Update the position of the ground blocks
       update_pipes(&gameState,
@@ -64,7 +65,7 @@ int main() {
                    &bird);  // Update score based on bird passing pipes
 
       // Render updated game state
-      render(&gameState, bird, ground, pipes);
+      render_gameplay(&gameState, bird, ground, pipes);
     }
   }
 
