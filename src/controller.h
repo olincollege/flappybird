@@ -1,34 +1,6 @@
 #include "model.h"
 
-#define TIME 500  // Time in milliseconds for how long each jump lasts
-
-/**
- * Processes user inputs to control the game state and the bird's movement.
- *
- * This function listens for SDL events and applies game logic based on user
- * inputs:
- * - 'SDL_QUIT' or 'ESCAPE' key: Exits the game by setting `running` and
- * `playing` to FALSE.
- * - 'SPACE' key: Initiates a jump action for the bird if not already jumping.
- *
- * @param gameState A pointer to the GameState to update the game's status.
- * @param bird A pointer to the Bird object to potentially initiate a jump.
- * @param timer A pointer to the Timer used to manage jump timing.
- */
-void process_input(GameState* gameState, Bird* bird, Timer* timer);
-
-/**
- * Causes the bird to jump if not already in the middle of a jump.
- *
- * This function triggers a jump by setting the bird's `jumpBool` to TRUE,
- * marking the timer as active, and setting the start time to the current tick
- * count. The jump affects the bird's vertical movement in the update function.
- *
- * @param bird A pointer to the Bird structure to modify its jumping state.
- * @param timer A pointer to the Timer structure to start the jump timing.
- */
-void jump(Bird* bird, Timer* timer);
-
+enum { TIME = 500 };  // Time in milliseconds for how long each jump lasts
 /**
  * Handles the initial game setup and the transition from the start menu to the
  * game.
@@ -44,5 +16,32 @@ void jump(Bird* bird, Timer* timer);
  * @param ground A pointer to the Ground to be reset for game start.
  * @param timer A pointer to the Timer to be reset for game start.
  */
-void start_game(GameState* gameState, Bird* bird, Pipes* pipes, Ground* ground,
-                Timer* timer);
+void process_input_start(GameState* gameState, Bird* bird, Pipes* pipes,
+                         Ground* ground, Timer* timer);
+
+/**
+ * Processes user inputs to control the game state and the bird's movement.
+ *
+ * This function listens for SDL events and applies game logic based on user
+ * inputs:
+ * - 'SDL_QUIT' or 'ESCAPE' key: Exits the game by setting `running` and
+ * `playing` to FALSE.
+ * - 'SPACE' key: Initiates a jump action for the bird if not already jumping.
+ *
+ * @param gameState A pointer to the GameState to update the game's status.
+ * @param bird A pointer to the Bird object to potentially initiate a jump.
+ * @param timer A pointer to the Timer used to manage jump timing.
+ */
+void process_input_gameplay(GameState* gameState, Bird* bird, Timer* timer);
+
+/**
+ * Causes the bird to jump if not already in the middle of a jump.
+ *
+ * This function triggers a jump by setting the bird's `jumpBool` to TRUE,
+ * marking the timer as active, and setting the start time to the current tick
+ * count. The jump affects the bird's vertical movement in the update function.
+ *
+ * @param bird A pointer to the Bird structure to modify its jumping state.
+ * @param timer A pointer to the Timer structure to start the jump timing.
+ */
+void jump(Bird* bird, Timer* timer);
