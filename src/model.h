@@ -4,77 +4,98 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Define Boolean type for better readability.
 typedef enum { FALSE, TRUE } Boolean;
 
+// Set fixed dimensions for the game window
 enum { WINDOW_WIDTH = 1200, WINDOW_HEIGHT = 1000 };
 
-enum { BIRD_X_POS = 20, BIRD_Y_POS = 20, BIRD_WIDTH = 15, BIRD_HEIGHT = 15 };
-
-enum { NUM_BLOCKS = 14, BLOCK_HEIGHT = 50, BLOCK_WIDTH = 100 };
-
+// Bird's starting position and size
 enum {
-  NUM_PIPES = 4,
-  PIPE_SPACING = 300,    // Constant space between pipes, adjust as needed
-  PIPE_GAP = 400,        // Vertical gap between pipes
-  MIN_PIPE_HEIGHT = 50,  // Minimum height of the pipe parts
-  PIPE_WIDTH = 100
+  BIRD_X_POS = 20,  // Horizontal start position of the bird
+  BIRD_Y_POS = 20,  // Vertical start position of the bird
+  BIRD_WIDTH = 15,  // Width of the bird
+  BIRD_HEIGHT = 15  // Height of the bird
 };
 
-extern const float BIRD_VEL;
+// Ground blocks settings, defining how many and their dimensions
+enum {
+  NUM_BLOCKS = 14,    // Number of ground blocks
+  BLOCK_HEIGHT = 50,  // Height of each ground block
+  BLOCK_WIDTH = 100   // Width of each ground block
+};
 
-extern const float GRAVITY;
-extern const float START_GAMESPEED;
-extern const float UPDATE_GAMESPEED;
+// Pipes configuration for the obstacles
+enum {
+  NUM_PIPES = 4,       // Number of pipes, i.e., pairs of obstacles
+  PIPE_SPACING = 300,  // Horizontal distance between consecutive pipes
+  PIPE_GAP = 400,      // Vertical gap between the top and bottom parts of pipes
+  MIN_PIPE_HEIGHT = 50,  // Minimum height of the pipe parts
+  PIPE_WIDTH = 100       // Width of the pipes
+};
 
+// External declarations for physics constants. Values for constants defined in
+// model.c
+extern const float BIRD_VEL;  // Bird's vertical velocity (speed of flapping)
+extern const float GRAVITY;   // Acceleration due to gravity (downward pull)
+extern const float
+    START_GAMESPEED;  // Initial speed of the game (speed of scrolling)
+extern const float UPDATE_GAMESPEED;  // Speed increase per point scored
+
+// Main game state structure, holding all relevant game status information
 typedef struct GameState {
-  SDL_Window* window;
-  SDL_Renderer* renderer;
-  int running;
-  int score;
-  float gameSpeedx;
-  int playing;
-  int highScore;
+  SDL_Window* window;      // SDL Window for rendering
+  SDL_Renderer* renderer;  // SDL Renderer associated with the window
+  int running;             // Game running state flag (boolean)
+  int score;               // Current score
+  float gameSpeedx;        // Horizontal speed of game elements like pipes
+  int playing;             // Is the game currently active (boolean)
+  int highScore;           // Record of the highest score achieved
 } GameState;
 
-// bird struct
+// Bird structure, represents the player's character
 typedef struct Bird {
-  int x;
-  float y;
-  int width;
-  int height;
-  float y_vel;
-  int jumpBool;
+  int x;         // Horizontal position of the bird
+  float y;       // Vertical position of the bird
+  int width;     // Width of the bird
+  int height;    // Height of the bird
+  float y_vel;   // Current vertical velocity of the bird
+  int jumpBool;  // Is the bird currently jumping (boolean)
 } Bird;
 
-// Timer struct
+// Timer structure for managing time-dependent events
 typedef struct Timer {
-  Uint32 startTime;
-  float ms;
-  int timerOn;
+  Uint32 startTime;  // Start time of the timer
+  float ms;          // Duration for the timer in milliseconds
+  int timerOn;       // Timer active state (boolean)
 } Timer;
 
+// Ground block structure, represents one horizontal block of the ground
 typedef struct GroundBlock {
-  float x;
-  float y;
-  int width;
-  int height;
+  float x;     // Horizontal position of the ground block
+  float y;     // Vertical position of the ground block
+  int width;   // Width of the ground block
+  int height;  // Height of the ground block
 } GroundBlock;
 
+// Ground structure, contains all ground blocks
 typedef struct Ground {
-  GroundBlock blocks[NUM_BLOCKS];  // Define NUM_BLOCKS based on your needs
+  GroundBlock blocks[NUM_BLOCKS];  // Array of ground blocks
 } Ground;
 
+// Pipe structure, represents one obstacle consisting of two vertical parts
 typedef struct Pipe {
-  float x;
-  float topHeight;  // Height of the top pipe (bottom edge of the top pipe)
-  float bottomY;    // Y position of the bottom pipe's top edge
-  int width;
-  float gap;
-  int passed;
+  float x;          // Horizontal position of both parts of the pipe
+  float topHeight;  // Height of the top part of the pipe
+  float bottomY;    // Vertical start of the bottom part of the pipe
+  int width;        // Width of the pipe (common for top and bottom parts)
+  float gap;   // Gap between the top and bottom parts (derived from PIPE_GAP)
+  int passed;  // Has the bird passed this pipe (for scoring)
 } Pipe;
 
+// Pipes structure, contains all pipes (obstacles)
 typedef struct Pipes {
-  Pipe pipe[NUM_PIPES];
+  Pipe pipe[NUM_PIPES];  // Array of pipes
 } Pipes;
 
 /**
