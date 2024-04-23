@@ -79,7 +79,8 @@ void update_bird(Timer* timer, Bird* bird) {
   }
 
   if ((timer->timerOn == TRUE) &&
-      (SDL_GetTicks() - timer->startTime) > (timer->ms)) {
+      (SDL_GetTicks() - timer->startTime) >
+          (Uint32)(timer->ms)) {  // Convert to Uint32
     bird->jumpBool = FALSE;
     timer->timerOn = FALSE;
   }
@@ -88,7 +89,7 @@ void update_bird(Timer* timer, Bird* bird) {
 void update_ground(GameState* gameState, Ground* ground) {
   for (int i = 0; i < NUM_BLOCKS; i++) {
     ground->blocks[i].x -= gameState->gameSpeedx;
-    if (ground->blocks[i].x + ground->blocks[i].width < 0) {
+    if (ground->blocks[i].x + (float)ground->blocks[i].width < 0) {
       // Reposition to the right end
       int next_index = (i == 0 ? NUM_BLOCKS - 1 : i - 1);
       ground->blocks[i].x = ground->blocks[next_index].x + BLOCK_WIDTH;
@@ -101,13 +102,13 @@ void update_pipes(GameState* gameState, Pipes* pipes) {
     pipes->pipe[i].x -= gameState->gameSpeedx;
 
     // Check if pipe has moved past the left edge of the screen
-    if (pipes->pipe[i].x + pipes->pipe[i].width < 0) {
-      int next_index = (i == NUM_PIPES - 1) ? 0 : i + 1;
-      float rightMostX = pipes->pipe[next_index].x;
+    if (pipes->pipe[i].x + (float)pipes->pipe[i].width < 0) {
+      // int next_index = (i == NUM_PIPES - 1) ? 0 : i + 1;
+      // float rightMostX = pipes->pipe[next_index].x;
       pipes->pipe[i].x = WINDOW_WIDTH;
       // Randomly re-generate the heights for the recycled pipe
       pipes->pipe[i].topHeight =
-          (rand() % (WINDOW_HEIGHT - 2 * MIN_PIPE_HEIGHT - PIPE_GAP)) +
+          (float)(rand() % (WINDOW_HEIGHT - 2 * MIN_PIPE_HEIGHT - PIPE_GAP)) +
           MIN_PIPE_HEIGHT;
       pipes->pipe[i].bottomY = pipes->pipe[i].topHeight + PIPE_GAP;
     }
@@ -117,7 +118,7 @@ void update_pipes(GameState* gameState, Pipes* pipes) {
 void update_score(GameState* gameState, Pipes* pipes, Bird* bird) {
   for (int i = 0; i < NUM_PIPES; i++) {
     // Check if the pipe is just passing the bird's x position
-    if (pipes->pipe[i].x + pipes->pipe[i].width < bird->x &&
+    if (pipes->pipe[i].x + (float)pipes->pipe[i].width < (float)bird->x &&
         !pipes->pipe[i].passed) {
       gameState->score++;            // Increment score
       pipes->pipe[i].passed = TRUE;  // Mark this pipe as passed
@@ -144,11 +145,11 @@ void pipe_collision(GameState* gameState, Bird bird, Pipes pipes) {
 
   for (int i = 0; i < NUM_PIPES; i++) {
     // Define the rectangle for the top part of the pipe
-    SDL_Rect pipe_top_rect = {pipes.pipe[i].x, 0, pipes.pipe[i].width,
+    SDL_Rect pipe_top_rect = {(int)pipes.pipe[i].x, 0, pipes.pipe[i].width,
                               (int)pipes.pipe[i].topHeight};
 
     // Define the rectangle for the bottom part of the pipe
-    SDL_Rect pipe_bottom_rect = {pipes.pipe[i].x, (int)pipes.pipe[i].bottomY,
+    SDL_Rect pipe_bottom_rect = {(int)pipes.pipe[i].x, (int)pipes.pipe[i].bottomY,
                                  pipes.pipe[i].width,
                                  WINDOW_HEIGHT - (int)pipes.pipe[i].bottomY};
 
