@@ -2,6 +2,8 @@
 #include <criterion/new/assert.h>
 #include "../src/model.h"
 
+// NOLINTBEGIN(*-magic-numbers)
+
 // Definition for a test that checks if the bird at the boundary top ends the game
 Test(boundary_tests, bird_at_top_boundary) {
     GameState gameState;
@@ -49,3 +51,5 @@ Test(boundary_tests, bird_within_safe_zone) {
     // Assert that the game is still playing
     cr_assert(gameState.playing, "Game should continue if bird is within safe bounds.");
 }
+
+// NOLINTEND(*-magic-numbers)

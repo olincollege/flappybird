@@ -67,9 +67,9 @@ void render_gameplay(GameState* gameState, Bird bird, Ground ground,
     SDL_RenderFillRect(gameState->renderer, &pipe_top_rect);
 
     // Render the bottom part of the pipe
-    SDL_Rect pipe_bottom_rect = {pipes.pipe[i].x, (int)(pipes.pipe[i].bottomY),
-                                 pipes.pipe[i].width,
-                                 WINDOW_HEIGHT - (int)pipes.pipe[i].bottomY};
+    SDL_Rect pipe_bottom_rect = {
+        pipes.pipe[i].x, (int)(pipes.pipe[i].bottomHeight), pipes.pipe[i].width,
+        WINDOW_HEIGHT - (int)pipes.pipe[i].bottomHeight};
     SDL_SetRenderDrawColor(gameState->renderer, PIPE_DARK_GREEN.r,
                            PIPE_DARK_GREEN.g, PIPE_DARK_GREEN.b,
                            PIPE_DARK_GREEN.a);

@@ -26,3 +26,14 @@ add_test(
     NAME test_boundaries
     COMMAND test_boundaries ${CRITERION_FLAGS}
 )
+
+add_executable(test_pipe_collision test_pipe_collision.c)
+target_link_libraries(test_pipe_collision
+    PRIVATE model
+    PUBLIC ${CRITERION}
+    ${SDL2_LIBRARIES}
+)
+add_test(
+    NAME test_pipe_collision
+    COMMAND test_pipe_collision ${CRITERION_FLAGS}
+)
