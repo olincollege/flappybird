@@ -1,6 +1,5 @@
-# Flappy Bird
-# SoftSys Final Project, Spring 2024
-# Evelyn Kessler, Satchel Sevenau, Prisha Bhatia
+# Flappy Bird - SoftSys Final Project, Spring 2024
+### Evelyn Kessler, Satchel Sevenau, Prisha Bhatia
 An implementation of the videogame "Flappy Bird" in C using the SDL library.
 
 ## Installing Dependencies
