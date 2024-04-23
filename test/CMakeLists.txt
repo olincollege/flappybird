@@ -15,3 +15,14 @@ list(APPEND CMAKE_CTEST_ARGUMENTS --verbose)
 #     NAME test_foo
 #     COMMAND test_foo ${CRITERION_FLAGS}
 # )
+
+add_executable(test_boundaries test_boundaries.c)
+target_link_libraries(test_boundaries
+    PRIVATE model
+    PUBLIC ${CRITERION}
+    ${SDL2_LIBRARIES}
+)
+add_test(
+    NAME test_boundaries
+    COMMAND test_boundaries ${CRITERION_FLAGS}
+)
