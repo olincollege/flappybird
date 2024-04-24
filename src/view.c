@@ -82,7 +82,48 @@ void render_gameplay(GameState* gameState, Bird bird, Ground ground,
 void render_start(GameState* gameState) {
   SDL_SetRenderDrawColor(gameState->renderer, RED.r, RED.g, RED.b, RED.a);
   SDL_RenderClear(gameState->renderer);
-  SDL_RenderPresent(gameState->renderer);
+  
+  // Ensure the TTF library is initialized
+    if (TTF_Init() == -1) {
+        fprintf(stderr, "TTF could not initialize: %s\n", TTF_GetError());
+        return;
+    }
+    
+    // Create the font
+    TTF_Font* font = TTF_OpenFont("Roboto-Regular.ttf", 24); // Update the font path
+    if (!font) {
+        fprintf(stderr, "Failed to load font: %s\n", TTF_GetError());
+        return;
+    }
+    
+    // Create the text surface
+    SDL_Color textColor = {255, 255, 255};  // white color
+    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, "Press space button to start", textColor);
+    if (!surfaceMessage) {
+        fprintf(stderr, "Could not create text surface: %s\n", TTF_GetError());
+        TTF_CloseFont(font);
+        return;
+    }
+    
+    // Create texture from surface message
+    SDL_Texture* Message = SDL_CreateTextureFromSurface(gameState->renderer, surfaceMessage);
+    SDL_FreeSurface(surfaceMessage);  // Don't forget to free the surface
+
+    // Setup the rectangle to size of message
+    SDL_Rect Message_rect; //create a rect
+    Message_rect.x = 100;  //controls the rect's x coordinate 
+    Message_rect.y = 100;  // controls the rect's y coordinate
+    Message_rect.w = surfaceMessage->w; // controls the width of the rect
+    Message_rect.h = surfaceMessage->h; // controls the height of the rect
+
+    // Render the message
+    SDL_RenderCopy(gameState->renderer, Message, NULL, &Message_rect);
+    SDL_DestroyTexture(Message);  // Don't forget to destroy the texture
+
+    SDL_RenderPresent(gameState->renderer);
+
+    TTF_CloseFont(font); // Close the font
+    TTF_Quit(); // Quit TTF
 }
 
 void destroy_window(GameState* gameState) {
