@@ -1,4 +1,15 @@
+#include <SDL2/SDL.h>
+
 #include "model.h"
+
+typedef struct Text {
+  SDL_Texture* texture;
+  SDL_Surface* surface;
+  SDL_Rect rect;
+  char text[50];
+  int x;
+  int y;
+} Text;
 
 /**
  * Initialize the SDL window and renderer.
@@ -43,6 +54,10 @@ void render_gameplay(GameState* gameState, Bird bird, Ground ground,
  * @param gameState A pointer to the GameState containing the renderer.
  */
 void render_start(GameState* gameState);
+
+void render_text(GameState* gameState, Text* text);
+
+void render_score(GameState* gameState, Text* text);
 
 /**
  * Destroy the SDL window and renderer and clean up SDL subsystems.

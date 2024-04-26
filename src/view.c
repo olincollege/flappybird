@@ -1,10 +1,14 @@
 #include "view.h"
 
+#include <stdio.h>
+#include <string.h>
+
 const SDL_Color BLACK = {0, 0, 0, 255};
 const SDL_Color RED = {255, 0, 0, 255};
 const SDL_Color DARK_GREEN = {34, 139, 34, 255};
 const SDL_Color LIGHT_GREEN = {50, 205, 50, 255};
 const SDL_Color PIPE_DARK_GREEN = {0, 100, 0, 255};
+const SDL_Color WHITE = {255, 255, 255, 255};
 
 int initialize_window(GameState* gameState) {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -27,6 +31,10 @@ int initialize_window(GameState* gameState) {
     return FALSE;
   }
   printf("renderer created\n");
+  if (TTF_Init() != 0) {
+    (void)fprintf(stderr, "Error initializing TTF \n");
+    return FALSE;
+  }
 
   return TRUE;
 }
@@ -76,13 +84,51 @@ void render_gameplay(GameState* gameState, Bird bird, Ground ground,
     SDL_RenderFillRect(gameState->renderer, &pipe_bottom_rect);
   }
 
+  Text score_text;
+  render_score(gameState, &score_text);
   SDL_RenderPresent(gameState->renderer);
+  SDL_DestroyTexture(score_text.texture);
+  SDL_FreeSurface(score_text.surface);
 }
 
 void render_start(GameState* gameState) {
-  SDL_SetRenderDrawColor(gameState->renderer, RED.r, RED.g, RED.b, RED.a);
+  SDL_SetRenderDrawColor(gameState->renderer, BLACK.r, BLACK.g, BLACK.b,
+                         BLACK.a);
   SDL_RenderClear(gameState->renderer);
+  Text start_message;
+  char temp_text[40] = "Press spacebar to begin";
+  strcpy(start_message.text, temp_text);
+  start_message.x = WINDOW_WIDTH / 2;
+  start_message.y = WINDOW_HEIGHT / 2;
+  render_text(gameState, &start_message);
   SDL_RenderPresent(gameState->renderer);
+}
+
+void render_text(GameState* gameState, Text* text) {
+  TTF_Font* Sans =
+      TTF_OpenFont("/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf", 24);
+  text->surface = TTF_RenderText_Solid(Sans, text->text, WHITE);
+  text->texture =
+      SDL_CreateTextureFromSurface(gameState->renderer, text->surface);
+  text->rect.w = text->surface->w;  // controls the width of the rect
+  text->rect.h = text->surface->h;
+  text->rect.x =
+      text->x - (text->rect.w / 2);  // controls the rect's x coordinate
+  text->rect.y =
+      text->y - (text->rect.h / 2);  // controls the height of the rect
+  SDL_RenderCopy(gameState->renderer, text->texture, NULL, &text->rect);
+}
+
+void render_score(GameState* gameState, Text* text) {
+  char score[50];
+  sprintf(score, "%i", gameState->score);
+  char your_score[50] = "Your Score: ";
+  printf("Your Score: %s", score);
+  strcat(&your_score, &score);
+  strcpy(text->text, your_score);
+  text->x = WINDOW_WIDTH - 100;
+  text->y = 100;
+  render_text(gameState, text);
 }
 
 void destroy_window(GameState* gameState) {
