@@ -1,5 +1,6 @@
 #include "model.h"
 
+
 // Initial vertical velocity of the bird, controls how fast it rises on a jump.
 const float BIRD_VEL = (float)0.15;
 
@@ -48,7 +49,7 @@ void init_pipes(Pipes* pipes) {
         (float)(rand_r(&seed) %
                 (WINDOW_HEIGHT - 2 * MIN_PIPE_HEIGHT - PIPE_GAP)) +
         MIN_PIPE_HEIGHT;
-    pipes->pipe[i].bottomY = pipes->pipe[i].topHeight + PIPE_GAP;
+    pipes->pipe[i].bottomHeight = pipes->pipe[i].topHeight + PIPE_GAP;
     pipes->pipe[i].width = PIPE_WIDTH;
     pipes->pipe[i].passed = FALSE;
   }
@@ -110,7 +111,7 @@ void update_pipes(GameState* gameState, Pipes* pipes) {
       pipes->pipe[i].topHeight =
           (float)(rand() % (WINDOW_HEIGHT - 2 * MIN_PIPE_HEIGHT - PIPE_GAP)) +
           MIN_PIPE_HEIGHT;
-      pipes->pipe[i].bottomY = pipes->pipe[i].topHeight + PIPE_GAP;
+      pipes->pipe[i].bottomHeight = pipes->pipe[i].topHeight + PIPE_GAP;
     }
   }
 }
@@ -149,9 +150,9 @@ void pipe_collision(GameState* gameState, Bird bird, Pipes pipes) {
                               (int)pipes.pipe[i].topHeight};
 
     // Define the rectangle for the bottom part of the pipe
-    SDL_Rect pipe_bottom_rect = {(int)pipes.pipe[i].x, (int)pipes.pipe[i].bottomY,
-                                 pipes.pipe[i].width,
-                                 WINDOW_HEIGHT - (int)pipes.pipe[i].bottomY};
+    SDL_Rect pipe_bottom_rect = {
+        (int)pipes.pipe[i].x, (int)pipes.pipe[i].bottomHeight,
+        pipes.pipe[i].width, WINDOW_HEIGHT - (int)pipes.pipe[i].bottomHeight};
 
     // Check if the bird collides with the top or bottom pipe
     if (SDL_HasIntersection(&bird_rect, &pipe_top_rect) ||

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -85,18 +86,22 @@ typedef struct Ground {
 
 // Pipe structure, represents one obstacle consisting of two vertical parts
 typedef struct Pipe {
-  float x;          // Horizontal position of both parts of the pipe
-  float topHeight;  // Height of the top part of the pipe
-  float bottomY;    // Vertical start of the bottom part of the pipe
-  int width;        // Width of the pipe (common for top and bottom parts)
-  float gap;   // Gap between the top and bottom parts (derived from PIPE_GAP)
-  int passed;  // Has the bird passed this pipe (for scoring)
+  float x;             // Horizontal position of both parts of the pipe
+  float topHeight;     // Height from the top of the screen to the bottom of the
+                       // top pipe
+  float bottomHeight;  // Height from the bottom of the screen to the top of the
+                       // bottom pipe
+  int width;           // Width of the pipe (common for top and bottom parts)
+  float min_gap;  // Minimum gap between the top and bottom pipes (derived from
+                  // PIPE_GAP)
+  int passed;     // Has the bird passed this pipe (for scoring)
 } Pipe;
 
 // Pipes structure, contains all pipes (obstacles)
 typedef struct Pipes {
   Pipe pipe[NUM_PIPES];  // Array of pipes
 } Pipes;
+
 
 /**
  * Initialize the game state with default values.

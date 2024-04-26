@@ -1,3 +1,4 @@
+#include <SDL2/SDL.h>
 #include "controller.h"
 
 void process_input_start(GameState* gameState, Bird* bird, Pipes* pipes,
