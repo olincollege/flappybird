@@ -11,6 +11,8 @@ typedef enum { FALSE, TRUE } Boolean;
 // Set fixed dimensions for the game window
 enum { WINDOW_WIDTH = 1200, WINDOW_HEIGHT = 1000 };
 
+enum {WINDOW_PAUSE_TIME = 1000};
+
 // Bird's starting position and size
 enum {
   BIRD_X_POS = 20,  // Horizontal start position of the bird

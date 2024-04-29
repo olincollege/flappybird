@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
+// NOLINTBEGIN(*-magic-numbers)
+
 const SDL_Color BLACK = {0, 0, 0, 255};
 const SDL_Color RED = {255, 0, 0, 255};
 const SDL_Color DARK_GREEN = {34, 139, 34, 255};
@@ -52,7 +54,7 @@ void render_gameplay(GameState* gameState, Bird bird, Ground ground,
 
   // Render each ground block with alternating colors
   for (int i = 0; i < NUM_BLOCKS; i++) {
-    SDL_Rect ground_rect = {ground.blocks[i].x, (int)ground.blocks[i].y,
+    SDL_Rect ground_rect = {(int)ground.blocks[i].x, (int)ground.blocks[i].y,
                             ground.blocks[i].width, ground.blocks[i].height};
     if (i % 2 == 0) {
       SDL_SetRenderDrawColor(gameState->renderer, DARK_GREEN.r, DARK_GREEN.g,
@@ -67,7 +69,7 @@ void render_gameplay(GameState* gameState, Bird bird, Ground ground,
   // Render for each pipe
   for (int i = 0; i < NUM_PIPES; i++) {
     // Render the top part of the pipe
-    SDL_Rect pipe_top_rect = {pipes.pipe[i].x, 0, pipes.pipe[i].width,
+    SDL_Rect pipe_top_rect = {(int)pipes.pipe[i].x, 0, pipes.pipe[i].width,
                               (int)pipes.pipe[i].topHeight};
     SDL_SetRenderDrawColor(gameState->renderer, PIPE_DARK_GREEN.r,
                            PIPE_DARK_GREEN.g, PIPE_DARK_GREEN.b,
@@ -76,8 +78,8 @@ void render_gameplay(GameState* gameState, Bird bird, Ground ground,
 
     // Render the bottom part of the pipe
     SDL_Rect pipe_bottom_rect = {
-        pipes.pipe[i].x, (int)(pipes.pipe[i].bottomHeight), pipes.pipe[i].width,
-        WINDOW_HEIGHT - (int)pipes.pipe[i].bottomHeight};
+        (int)pipes.pipe[i].x, (int)(pipes.pipe[i].bottomHeight),
+        pipes.pipe[i].width, WINDOW_HEIGHT - (int)pipes.pipe[i].bottomHeight};
     SDL_SetRenderDrawColor(gameState->renderer, PIPE_DARK_GREEN.r,
                            PIPE_DARK_GREEN.g, PIPE_DARK_GREEN.b,
                            PIPE_DARK_GREEN.a);
@@ -154,3 +156,5 @@ void destroy_window(GameState* gameState) {
   }
   SDL_Quit();
 }
+
+// NOLINTEND(*-magic-numbers)
