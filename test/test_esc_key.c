@@ -29,9 +29,6 @@ static void setup_esc_test(GameState* gameState, SDL_Event* event) {
   // Set up an ESC keydown event
   event->type = SDL_KEYDOWN;
   event->key.keysym.sym = SDLK_ESCAPE;
-  // Set up an ESC keydown event
-  event->type = SDL_KEYDOWN;
-  event->key.keysym.sym = SDLK_ESCAPE;
 }
 
 /**
@@ -50,23 +47,14 @@ static void setup_esc_test(GameState* gameState, SDL_Event* event) {
 Test(esc_key_tests, esc_keypress_quits_game) {
   GameState gameState;
   SDL_Event event;
-  GameState gameState;
-  SDL_Event event;
-
-  // Setup the test environment
-  setup_esc_test(&gameState, &event);
+  
   // Setup the test environment
   setup_esc_test(&gameState, &event);
 
   // Process the input as the game would during normal operation
   SDL_PushEvent(&event);  // Simulate the event being in the event queue
   process_input_gameplay(&gameState, NULL, NULL);
-  // Process the input as the game would during normal operation
-  SDL_PushEvent(&event);  // Simulate the event being in the event queue
-  process_input_gameplay(&gameState, NULL, NULL);
 
-  // Assert the game state reflects the game should stop running
-  cr_assert_not(gameState.running, "Game should quit when ESC is pressed.");
   // Assert the game state reflects the game should stop running
   cr_assert_not(gameState.running, "Game should quit when ESC is pressed.");
 }
@@ -89,15 +77,7 @@ Test(esc_key_tests, esc_keypress_quits_game) {
 Test(esc_key_tests, cleanup_on_esc_keypress) {
   GameState gameState;
   SDL_Event event;
-  GameState gameState;
-  SDL_Event event;
 
-  // Setup the test environment with resources allocated
-  setup_esc_test(&gameState, &event);
-  gameState.window = SDL_CreateWindow("Test Window", SDL_WINDOWPOS_UNDEFINED,
-                                      SDL_WINDOWPOS_UNDEFINED, 640, 480, 0);
-  gameState.renderer =
-      SDL_CreateRenderer(gameState.window, -1, SDL_RENDERER_ACCELERATED);
   // Setup the test environment with resources allocated
   setup_esc_test(&gameState, &event);
   gameState.window = SDL_CreateWindow("Test Window", SDL_WINDOWPOS_UNDEFINED,
@@ -109,14 +89,7 @@ Test(esc_key_tests, cleanup_on_esc_keypress) {
   SDL_PushEvent(&event);  // Simulate the event being in the event queue
   process_input_gameplay(&gameState, NULL, NULL);
   destroy_window(&gameState);
-  // Process the input to trigger resource cleanup
-  SDL_PushEvent(&event);  // Simulate the event being in the event queue
-  process_input_gameplay(&gameState, NULL, NULL);
-  destroy_window(&gameState);
 
-  // Assert all resources are cleaned up
-  cr_assert_null(gameState.window, "Window should be NULL after cleanup.");
-  cr_assert_null(gameState.renderer, "Renderer should be NULL after cleanup.");
   // Assert all resources are cleaned up
   cr_assert_null(gameState.window, "Window should be NULL after cleanup.");
   cr_assert_null(gameState.renderer, "Renderer should be NULL after cleanup.");

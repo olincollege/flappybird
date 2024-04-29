@@ -51,6 +51,7 @@ Test(bird_tests, bird_initializes_correctly) {
                "Bird height should be initialized to BIRD_HEIGHT");
   cr_expect_float_eq(
       bird.y_vel, BIRD_VEL, 0.001,
+
       "Bird vertical velocity should be initialized to BIRD_VEL");
   cr_expect_eq(bird.jumpBool, FALSE,
                "Bird jumpBool should be initialized to FALSE");
@@ -75,8 +76,6 @@ Test(bird_tests, bird_resets_correctly_after_end_game) {
   Bird bird;
   init_bird(&bird);  // Initialize bird for the first game
 
-  // Simulate end-game conditions where the bird might be jumping
-  simulate_end_game_jump(&bird);
   // Simulate end-game conditions where the bird might be jumping
   simulate_end_game_jump(&bird);
 

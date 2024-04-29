@@ -68,6 +68,7 @@ Test(boundary_tests, bird_at_bottom_boundary) {
   // Assert that the game is no longer playing
   cr_assert_not(gameState.playing,
                 "Game should end if bird touches the bottom boundary.");
+
 }
 
 /**
