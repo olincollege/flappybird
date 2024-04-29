@@ -37,7 +37,7 @@ Test(pipe_collision_tests, bottom_of_top_pipe) {
   bird.y_vel = -5;
   bird.jumpBool = FALSE;
 
-  pipe.x = bird.x;
+  pipe.x = (float)bird.x;
   pipe.topHeight = 400;
   pipe.width = 5;
   pipe.bottomHeight = 600;
@@ -86,7 +86,7 @@ Test(pipe_collision_tests, top_of_bottom_pipe) {
   bird.y_vel = -5;
   bird.jumpBool = FALSE;
 
-  pipe.x = bird.x;
+  pipe.x = (float)bird.x;
   pipe.bottomHeight = 400;
   pipe.width = 5;
   pipe.topHeight = 200;
@@ -135,7 +135,7 @@ Test(pipe_collision_tests, side_of_pipe) {
   bird.y_vel = -5;
   bird.jumpBool = FALSE;
 
-  pipe.x = bird.x + (bird.width / 2);
+  pipe.x = (float)bird.x + ((float)bird.width / 2);
   pipe.bottomHeight = 400;
   pipe.width = 5;
   pipe.topHeight = 200;

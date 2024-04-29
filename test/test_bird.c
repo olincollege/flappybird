@@ -3,6 +3,8 @@
 
 #include "../src/model.h"  // Assuming the Bird structure and init functions are defined here
 
+// NOLINTBEGIN(*-magic-numbers)
+
 /**
  * @brief Simulates an upward jump for the bird that goes all the way to the top
  * of the screen to end the game.
@@ -88,3 +90,4 @@ Test(bird_tests, bird_resets_correctly_after_end_game) {
   cr_assert_eq(bird.jumpBool, FALSE,
                "Bird jumpBool did not reset correctly after end game");
 }
+// NOLINTEND(*-magic-numbers)
