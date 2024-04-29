@@ -3,7 +3,7 @@
 An implementation of the videogame "Flappy Bird" in C using the SDL library.
 
 ## Installing Dependencies
-This project uses the SDL library and the associated SDL Text library to render the game. 
+This project uses the SDL Library and the associated SDL Text Library to render the game. 
 
 To install the appropriate libraries, run the following commands from a linux terminal. You must install both libraries before running the game.
 
@@ -11,14 +11,14 @@ Install SDL
 ```
 sudo apt-get install libsdl2-dev
 ```
-The SDL library is a cross-platform development library for writing computer games in C. This command will install the appropriate version, SDL 2. SDL 2.0 and above is available under the zlib license from https://www.libsdl.org/.
+The SDL Library is a cross-platform development library for writing computer games in C. This command will install the appropriate version, SDL 2. SDL 2.0 and above is available under the zlib license from https://www.libsdl.org/.
 
 
 Install SDL_Text
 ```
 sudo apt-get install libsdl2-ttf-dev 
 ```
-The SDL Text library works in conjunction with the SDL library to render text using TrueType fonts. SDL_ttf 2.0 is available under the zlib license from https://wiki.libsdl.org/SDL2_ttf/. 
+The SDL Text Library works in conjunction with the SDL Library to render text using TrueType fonts. SDL_ttf 2.0 is available under the zlib license from https://wiki.libsdl.org/SDL2_ttf/. 
 
 Note that the SDL library may not work properly on a virtual machine.
 
