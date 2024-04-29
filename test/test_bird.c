@@ -72,7 +72,11 @@ Test(bird_tests, bird_initializes_correctly) {
 Test(bird_tests, bird_resets_correctly_after_end_game) {
   Bird bird;
   init_bird(&bird);  // Initialize bird for the first game
+  Bird bird;
+  init_bird(&bird);  // Initialize bird for the first game
 
+  // Simulate end-game conditions where the bird might be jumping
+  simulate_end_game_jump(&bird);
   // Simulate end-game conditions where the bird might be jumping
   simulate_end_game_jump(&bird);
 
