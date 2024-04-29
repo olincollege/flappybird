@@ -53,7 +53,6 @@ include_directories(${SDL2_INCLUDE_DIRS})
 
 # Find SDL2_ttf
 
-
 # Include the source files.
 add_subdirectory(src)
 

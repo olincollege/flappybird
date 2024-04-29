@@ -32,6 +32,8 @@ void process_input_gameplay(GameState* gameState, Bird* bird, Timer* timer) {
   SDL_PollEvent(&event);
   switch (event.type) {
     case SDL_QUIT:
+      gameState->window = NULL;
+      gameState->renderer = NULL;
       gameState->playing = FALSE;
       gameState->running = FALSE;
       break;
@@ -39,6 +41,8 @@ void process_input_gameplay(GameState* gameState, Bird* bird, Timer* timer) {
       switch (event.key.keysym.sym) {
         // quit the program on escape key press
         case SDLK_ESCAPE:
+          gameState->window = NULL;
+          gameState->renderer = NULL;
           gameState->playing = FALSE;
           gameState->running = FALSE;
           break;
