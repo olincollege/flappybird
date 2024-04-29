@@ -5,7 +5,22 @@
 
 // NOLINTBEGIN(*-magic-numbers)
 
-// Define a test that checks if the bird hits the bottom of the top pipe
+/**
+ * @brief Test to verify that the game ends when the bird collides with the
+ * bottom of the top pipe.
+ *
+ * This test initializes the game state and bird's position to simulate a
+ * scenario where the bird is positioned at the exact top edge of a top pipe.
+ * The test checks if the collision detection function correctly identifies this
+ * position as a collision, resulting in the game ending.
+ *
+ * @test
+ *      - Initialize game state and bird to simulate collision with bottom of
+ * top pipe.
+ *      - Call the collision detection function.
+ *      - Assert that the game is no longer playing, indicating a collision was
+ * detected.
+ */
 Test(pipe_collision_tests, bottom_of_top_pipe) {
   GameState gameState;
   Bird bird;
@@ -39,7 +54,22 @@ Test(pipe_collision_tests, bottom_of_top_pipe) {
                 "Game should end if bird touches the top of the pipe.");
 }
 
-// Define a test that checks if the bird touches the top of the bottom pipe
+/**
+ * @brief Test to verify that the game ends when the bird collides with the top
+ * of the bottom pipe.
+ *
+ * This test sets up the game state and bird's position to simulate a scenario
+ * where the bird is positioned at the exact bottom edge of a bottom pipe. It
+ * checks if the collision detection function correctly identifies this position
+ * as a collision, resulting in the game ending.
+ *
+ * @test
+ *      - Initialize game state and bird to simulate collision with top of
+ * bottom pipe.
+ *      - Call the collision detection function.
+ *      - Assert that the game is no longer playing, indicating a collision was
+ * detected.
+ */
 Test(pipe_collision_tests, top_of_bottom_pipe) {
   GameState gameState;
   Bird bird;
@@ -73,7 +103,22 @@ Test(pipe_collision_tests, top_of_bottom_pipe) {
                 "Game should end if bird touches the bottom of the pipe.");
 }
 
-// Definition for a test that checks if the bird hits the side of a pipe
+/**
+ * @brief Test to verify that the game ends when the bird collides with the side
+ * of a pipe.
+ *
+ * This test initializes the game state and sets the bird's position to simulate
+ * a scenario where the bird is in contact with the side of a pipe. The test
+ * evaluates if the collision detection function correctly identifies this as a
+ * collision, thereby ending the game.
+ *
+ * @test
+ *      - Initialize game state and bird to simulate collision with the side of
+ * a pipe.
+ *      - Call the collision detection function.
+ *      - Assert that the game is no longer playing, indicating a collision was
+ * detected.
+ */
 Test(pipe_collision_tests, side_of_pipe) {
   GameState gameState;
   Bird bird;
