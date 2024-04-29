@@ -15,10 +15,18 @@ Test(pipe_collision_tests, bottom_of_top_pipe) {
   // Initialize game state and bird
   gameState.playing = TRUE;
   bird.y = 399;  // Bird is at the top of the pipe
-
   bird.x = 20;
+  bird.width = 5;
+  bird.height = 5;
+  bird.y_vel = -5;
+  bird.jumpBool = FALSE;
+
   pipe.x = bird.x;
   pipe.topHeight = 400;
+  pipe.width = 5;
+  pipe.bottomHeight = 600;
+  pipe.min_gap = 200;
+  pipe.passed = FALSE;
 
   pipes.pipe[0] = pipe;
 
@@ -40,10 +48,18 @@ Test(pipe_collision_tests, top_of_bottom_pipe) {
   // Initialize game state and bird
   gameState.playing = TRUE;
   bird.y = 400;  // Bird is at the bottom of the pipe
-
   bird.x = 20;
+  bird.width = 5;
+  bird.height = 5;
+  bird.y_vel = -5;
+  bird.jumpBool = FALSE;
+
   pipe.x = bird.x;
   pipe.bottomHeight = 400;
+  pipe.width = 5;
+  pipe.topHeight = 200;
+  pipe.min_gap = 200;
+  pipe.passed = FALSE;
 
   pipes.pipe[0] = pipe;
 
@@ -65,11 +81,18 @@ Test(pipe_collision_tests, side_of_pipe) {
   // Initialize game state and bird
   gameState.playing = TRUE;
   bird.y = 300;  // Bird is at the bottom of the pipe
-  bird.width = 4;
-
   bird.x = 20;
+  bird.width = 5;
+  bird.height = 5;
+  bird.y_vel = -5;
+  bird.jumpBool = FALSE;
+
   pipe.x = bird.x + (bird.width / 2);
   pipe.bottomHeight = 400;
+  pipe.width = 5;
+  pipe.topHeight = 200;
+  pipe.min_gap = 200;
+  pipe.passed = FALSE;
 
   pipes.pipe[0] = pipe;
 
@@ -89,12 +112,19 @@ Test(pipe_collision_tests, no_collision) {
 
   // Initialize game state and bird
   gameState.playing = TRUE;
-  bird.y = 300;  // Bird is at the bottom of the pipe
-  bird.width = 4;
-
+  bird.y = 250;
+  bird.width = 5;
+  bird.height = 5;
+  bird.y_vel = -5;
+  bird.jumpBool = FALSE;
   bird.x = 20;
+
   pipe.x = 800;
-  pipe.bottomHeight = 200;
+  pipe.bottomHeight = 400;
+  pipe.width = 5;
+  pipe.topHeight = 200;
+  pipe.min_gap = 200;
+  pipe.passed = FALSE;
 
   pipes.pipe[0] = pipe;
 

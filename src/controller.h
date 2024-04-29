@@ -1,3 +1,4 @@
+#include <SDL2/SDL.h>
 #include "model.h"
 
 // Enumerations for game timing configurations

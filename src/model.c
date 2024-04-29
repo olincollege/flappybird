@@ -1,5 +1,6 @@
 #include "model.h"
 
+
 // Initial vertical velocity of the bird, controls how fast it rises on a jump.
 const float BIRD_VEL = (float)0.15;
 

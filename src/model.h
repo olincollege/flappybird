@@ -102,6 +102,7 @@ typedef struct Pipes {
   Pipe pipe[NUM_PIPES];  // Array of pipes
 } Pipes;
 
+
 /**
  * Initialize the game state with default values.
  *
