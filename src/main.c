@@ -35,10 +35,16 @@ int main() {
   // Initialize window and renderer, check for initialization success
   gameState.running = initialize_window(&gameState);
 
+  Timer end_timer;
+  end_timer.startTime = SDL_GetTicks();
+  end_timer.ms = 1;
+  end_timer.timerOn = TRUE;
   // Main game loop: runs until 'running' is FALSE
   while (gameState.running == TRUE) {
     // Handle the start of the game, waiting for user to commence playing
-    process_input_start(&gameState, &bird, &pipes, &ground, &timer);
+    reset_gameplay(&gameState, &bird, &pipes, &ground, &timer);
+
+    process_input_start(&gameState, &end_timer);
 
     // Render start screen if not playing
     if (gameState.playing == FALSE) {
@@ -54,14 +60,16 @@ int main() {
       update_bird(
           &timer,
           &bird);  // Update bird's position based on jumping and gravity
-      check_boundaries(&gameState,
-                       bird);  // Check for collisions with the screen edges
+      if (check_boundaries(&gameState, &bird, &end_timer) == FALSE) {
+        break;
+      }  // Check for collisions with the screen edges
       update_ground(&gameState,
                     &ground);  // Update the position of the ground blocks
       update_pipes(&gameState,
                    &pipes);  // Update the positions and states of pipes
-      pipe_collision(&gameState, bird,
-                     pipes);  // Check for collisions between the bird and
+      if (pipe_collision(&gameState, &bird, &pipes, &end_timer) == FALSE) {
+        break;
+      }  // Check for collisions between the bird and
       update_score(&gameState, &pipes,
                    &bird);  // Update score based on bird passing pipes
       // Render updated game state
