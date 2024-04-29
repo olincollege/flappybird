@@ -3,26 +3,24 @@
 An implementation of the videogame "Flappy Bird" in C using the SDL library.
 
 ## Installing Dependencies
-This project uses the SDL library and associated SDL_Image and SDL_Text libraries to render the game. 
+This project uses the SDL library and the associated SDL Text library to render the game. 
 
-To install the appropriate libraries, run the following commands from a linux terminal.
+To install the appropriate libraries, run the following commands from a linux terminal. You must install both libraries before running the game.
 
 Install SDL
 ```
-sudo ...
+sudo apt-get install libsdl2-dev
 ```
+The SDL library is a cross-platform development library for writing computer games in C. This command will install the appropriate version, SDL 2. SDL 2.0 and above is available under the zlib license from https://www.libsdl.org/.
 
-Install SDL_Image
-```
-sudo ...
-```
 
 Install SDL_Text
 ```
-sudo ...
+sudo apt-get install libsdl2-ttf-dev 
 ```
+The SDL Text library works in conjunction with the SDL library to render text using TrueType fonts. SDL_ttf 2.0 is available under the zlib license from https://wiki.libsdl.org/SDL2_ttf/. 
 
-Note that these libraries will not work properly on a virtual machine.
+Note that the SDL library may not work properly on a virtual machine.
 
 ## How to Run
 This project is compiled and run using CMake. If this is your first time playing, you will need to compile the code into a build folder. Starting in the main directory, enter the following commands to create the build folder and run cmake.
@@ -40,8 +38,8 @@ src/run_main
 ```
 
 ## Game Instructions
-After running the commands above, you should see a pop-up screen with the flappy bird game start screen displayed. If you do not see a screen pop up, minimize other windows or check your taskbar for a new icon.
+After running the commands above, you should see a pop-up screen with a game start screen displayed. If you do not see a screen pop up, minimize other windows or check your taskbar for a new icon.
 
-Press the spacebar to start the game and, once the game is running, to jump the bird. The game will end when the bird hits the top/bottom of the window or any pipe surface. After each game the screen will display the score from the latest game as well as the high score from all games played in this window. Press the spacebar to play again.
+Press the spacebar to start the game and, once the game is running, to jump the bird. The game will end when the bird hits the top/bottom of the window or any pipe surface. After each game the screen will display the high score from all games played in this window. Press the spacebar to play again on the same course. To play a new random course, use the esc key to destroy the window as outlined below and start a new session.
 
 When you are done playing, use the esc key to destroy the pop-up window. Note that destroying the window will erase all data including the high score for this session. To create a new session, follow the instructions in "How to Run" to generate a new game window.
