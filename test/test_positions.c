@@ -16,7 +16,6 @@ Test(bird_position_tests, bird_drop) {
   bird.height = 5;
   bird.x = 5;
 
-
   update_bird(&timer, &bird);
 
   cr_assert(
