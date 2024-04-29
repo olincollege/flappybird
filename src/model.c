@@ -1,6 +1,5 @@
 #include "model.h"
 
-
 // Initial vertical velocity of the bird, controls how fast it rises on a jump.
 const float BIRD_VEL = (float)0.15;
 
@@ -63,7 +62,6 @@ void reset_gameplay(GameState* gameState, Bird* bird, Pipes* pipes,
   gameState->gameSpeedx = START_GAMESPEED;
   setup_inits(bird, ground, pipes);
   timer->timerOn = FALSE;
-  gameState->playing = TRUE;
 }
 
 void setup_inits(Bird* bird, Ground* ground, Pipes* pipes) {
@@ -134,33 +132,43 @@ void update_score(GameState* gameState, Pipes* pipes, Bird* bird) {
   }
 }
 
-void check_boundaries(GameState* gameState, Bird bird) {
-  if ((bird.y <= 0) || (bird.y >= WINDOW_HEIGHT - BLOCK_HEIGHT)) {
+Boolean check_boundaries(GameState* gameState, Bird* bird, Timer* end_timer) {
+  if ((bird->y <= 0) || (bird->y >= WINDOW_HEIGHT - BLOCK_HEIGHT)) {
     gameState->playing = FALSE;
+    end_timer->timerOn = TRUE;
+    end_timer->startTime = SDL_GetTicks();
+    end_timer->ms = 1000;
+    return FALSE;
   }
+  return TRUE;
 }
 
-void pipe_collision(GameState* gameState, Bird bird, Pipes pipes) {
+Boolean pipe_collision(GameState* gameState, Bird* bird, Pipes* pipes,
+                       Timer* end_timer) {
   // Define the rectangle for the bird
-  SDL_Rect bird_rect = {bird.x, (int)bird.y, bird.width, bird.height};
+  SDL_Rect bird_rect = {bird->x, (int)bird->y, bird->width, bird->height};
 
   for (int i = 0; i < NUM_PIPES; i++) {
     // Define the rectangle for the top part of the pipe
-    SDL_Rect pipe_top_rect = {(int)pipes.pipe[i].x, 0, pipes.pipe[i].width,
-                              (int)pipes.pipe[i].topHeight};
+    SDL_Rect pipe_top_rect = {(int)pipes->pipe[i].x, 0, pipes->pipe[i].width,
+                              (int)pipes->pipe[i].topHeight};
 
     // Define the rectangle for the bottom part of the pipe
     SDL_Rect pipe_bottom_rect = {
-        (int)pipes.pipe[i].x, (int)pipes.pipe[i].bottomHeight,
-        pipes.pipe[i].width, WINDOW_HEIGHT - (int)pipes.pipe[i].bottomHeight};
+        (int)pipes->pipe[i].x, (int)pipes->pipe[i].bottomHeight,
+        pipes->pipe[i].width, WINDOW_HEIGHT - (int)pipes->pipe[i].bottomHeight};
 
     // Check if the bird collides with the top or bottom pipe
     if (SDL_HasIntersection(&bird_rect, &pipe_top_rect) ||
         SDL_HasIntersection(&bird_rect, &pipe_bottom_rect)) {
       gameState->playing = FALSE;  // Collision detected, stop the game
-      return;
+      end_timer->timerOn = TRUE;
+      end_timer->startTime = SDL_GetTicks();
+      end_timer->ms = 1000;
+      return FALSE;
     }
   }
+  return TRUE;
 }
 
 void increase_speed(GameState* gameState, Bird* bird) {

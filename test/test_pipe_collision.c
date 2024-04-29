@@ -11,6 +11,7 @@ Test(pipe_collision_tests, bottom_of_top_pipe) {
   Bird bird;
   Pipe pipe;
   Pipes pipes;
+  Timer end_timer;
 
   // Initialize game state and bird
   gameState.playing = TRUE;
@@ -31,7 +32,7 @@ Test(pipe_collision_tests, bottom_of_top_pipe) {
   pipes.pipe[0] = pipe;
 
   // Call the function
-  pipe_collision(&gameState, bird, pipes);
+  pipe_collision(&gameState, &bird, &pipes, &end_timer);
 
   // Assert that the game is no longer playing
   cr_assert_not(gameState.playing,
@@ -44,6 +45,7 @@ Test(pipe_collision_tests, top_of_bottom_pipe) {
   Bird bird;
   Pipe pipe;
   Pipes pipes;
+  Timer end_timer;
 
   // Initialize game state and bird
   gameState.playing = TRUE;
@@ -64,7 +66,7 @@ Test(pipe_collision_tests, top_of_bottom_pipe) {
   pipes.pipe[0] = pipe;
 
   // Call the function
-  pipe_collision(&gameState, bird, pipes);
+  pipe_collision(&gameState, &bird, &pipes, &end_timer);
 
   // Assert that the game is no longer playing
   cr_assert_not(gameState.playing,
@@ -77,6 +79,7 @@ Test(pipe_collision_tests, side_of_pipe) {
   Bird bird;
   Pipe pipe;
   Pipes pipes;
+  Timer end_timer;
 
   // Initialize game state and bird
   gameState.playing = TRUE;
@@ -97,7 +100,7 @@ Test(pipe_collision_tests, side_of_pipe) {
   pipes.pipe[0] = pipe;
 
   // Call the function
-  pipe_collision(&gameState, bird, pipes);
+  pipe_collision(&gameState, &bird, &pipes, &end_timer);
 
   // Assert that the game is no longer playing
   cr_assert_not(gameState.playing,
@@ -109,6 +112,7 @@ Test(pipe_collision_tests, no_collision) {
   Bird bird;
   Pipe pipe;
   Pipes pipes;
+  Timer end_timer;
 
   // Initialize game state and bird
   gameState.playing = TRUE;
@@ -129,7 +133,7 @@ Test(pipe_collision_tests, no_collision) {
   pipes.pipe[0] = pipe;
 
   // Call the function
-  pipe_collision(&gameState, bird, pipes);
+  pipe_collision(&gameState, &bird, &pipes, &end_timer);
 
   // Assert that the game is no longer playing
   cr_assert(gameState.playing,

@@ -10,7 +10,7 @@ const SDL_Color LIGHT_GREEN = {50, 205, 50, 255};
 const SDL_Color PIPE_DARK_GREEN = {0, 100, 0, 255};
 const SDL_Color WHITE = {255, 255, 255, 255};
 
-int initialize_window(GameState* gameState) {
+Boolean initialize_window(GameState* gameState) {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
     (void)fprintf(stderr, "Error initializing SDL.\n");
     return FALSE;
@@ -96,11 +96,12 @@ void render_start(GameState* gameState) {
                          BLACK.a);
   SDL_RenderClear(gameState->renderer);
   Text start_message;
-  char temp_text[40] = "Press spacebar to begin";
+  char temp_text[40] = "Press SPACE to begin/jump & ESC to exit";
   strcpy(start_message.text, temp_text);
   start_message.x = WINDOW_WIDTH / 2;
   start_message.y = WINDOW_HEIGHT / 2;
   render_text(gameState, &start_message);
+  render_high_score(gameState);
   SDL_RenderPresent(gameState->renderer);
 }
 
@@ -123,12 +124,23 @@ void render_score(GameState* gameState, Text* text) {
   char score[50];
   sprintf(score, "%i", gameState->score);
   char your_score[50] = "Your Score: ";
-  printf("Your Score: %s", score);
   strcat(&your_score, &score);
   strcpy(text->text, your_score);
-  text->x = WINDOW_WIDTH - 100;
-  text->y = 100;
+  text->x = WINDOW_WIDTH - 130;
+  text->y = 50;
   render_text(gameState, text);
+}
+
+void render_high_score(GameState* gameState) {
+  Text high_score_message;
+  char high_score[50];
+  sprintf(high_score, "%i", gameState->highScore);
+  char temp_text[40] = "High Score: ";
+  strcat(&temp_text, &high_score);
+  strcpy(high_score_message.text, temp_text);
+  high_score_message.x = WINDOW_WIDTH / 2;
+  high_score_message.y = (WINDOW_HEIGHT / 2) + 25;
+  render_text(gameState, &high_score_message);
 }
 
 void destroy_window(GameState* gameState) {

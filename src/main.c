@@ -35,10 +35,16 @@ int main() {
   // Initialize window and renderer, check for initialization success
   gameState.running = initialize_window(&gameState);
 
+  Timer end_timer;
+  end_timer.startTime = SDL_GetTicks();
+  end_timer.ms = 1;
+  end_timer.timerOn = TRUE;
   // Main game loop: runs until 'running' is FALSE
   while (gameState.running == TRUE) {
     // Handle the start of the game, waiting for user to commence playing
-    process_input_start(&gameState, &bird, &pipes, &ground, &timer);
+    reset_gameplay(&gameState, &bird, &pipes, &ground, &timer);
+
+    process_input_start(&gameState, &end_timer);
 
     // Render start screen if not playing
     if (gameState.playing == FALSE) {
@@ -54,14 +60,16 @@ int main() {
       update_bird(
           &timer,
           &bird);  // Update bird's position based on jumping and gravity
-      check_boundaries(&gameState,
-                       bird);  // Check for collisions with the screen edges
+      if (check_boundaries(&gameState, &bird, &end_timer) == FALSE) {
+        break;
+      }  // Check for collisions with the screen edges
       update_ground(&gameState,
                     &ground);  // Update the position of the ground blocks
       update_pipes(&gameState,
                    &pipes);  // Update the positions and states of pipes
-      pipe_collision(&gameState, bird,
-                     pipes);  // Check for collisions between the bird and
+      if (pipe_collision(&gameState, &bird, &pipes, &end_timer) == FALSE) {
+        break;
+      }  // Check for collisions between the bird and
       update_score(&gameState, &pipes,
                    &bird);  // Update score based on bird passing pipes
       // Render updated game state
@@ -73,50 +81,3 @@ int main() {
   destroy_window(&gameState);
   return 0;
 }
-
-// int main() {
-//   // SDL_Surface* text;
-//   // // Set color to black
-//   // SDL_Color color = {0, 0, 0};
-
-//   TTF_Font* Sans =
-//       TTF_OpenFont("/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",
-//       24);
-//   // text = TTF_RenderText_Solid(font, "Hello World!", color);
-//   // if (!text) {
-//   //   // cout << "Failed to render text: " << TTF_GetError() << endl;
-//   //   printf("Failed to initialize \n");
-//   // }
-//   // this is the color in rgb format,
-//   // maxing out all would give you the color white,
-//   // and it will be your text's color
-//   SDL_Color White = {255, 255, 255};
-
-//   // as TTF_RenderText_Solid could only be used on
-//   // SDL_Surface then you have to create the surface first
-//   SDL_Surface* surfaceMessage =
-//       TTF_RenderText_Solid(Sans, "put your text here", White);
-
-//   // now you can convert it into a texture
-//   SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer,
-//   surfaceMessage);
-
-//   SDL_Rect Message_rect;  // create a rect
-//   Message_rect.x = 0;     // controls the rect's x coordinate
-//   Message_rect.y = 0;     // controls the rect's y coordinte
-//   Message_rect.w = 100;   // controls the width of the rect
-//   Message_rect.h = 100;   // controls the height of the rect
-
-//   // (0,0) is on the top left of the window/screen,
-//   // think a rect as the text's box,
-//   // that way it would be very simple to understand
-
-//   // Now since it's a texture, you have to put RenderCopy
-//   // in your game loop area, the area where the whole code executes
-
-//   // you put the renderer's name first, the Message,
-//   // the crop size (you can ignore this if you don't want
-//   // to dabble with cropping), and the rect which is the size
-//   // and coordinate of your texture
-//   SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
-// }

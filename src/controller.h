@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+
 #include "model.h"
 
 // Enumerations for game timing configurations
@@ -16,13 +17,9 @@ enum {
  *
  * @param gameState A pointer to the GameState to update the running state and
  * possibly start the game.
- * @param bird A pointer to the Bird to be reset for game start.
- * @param pipes A pointer to the Pipes to be reset for game start.
- * @param ground A pointer to the Ground to be reset for game start.
- * @param timer A pointer to the Timer to be reset for game start.
+ * @param timer A pointer to the Timer to display the start page for at least two seconds.
  */
-void process_input_start(GameState* gameState, Bird* bird, Pipes* pipes,
-                         Ground* ground, Timer* timer);
+void process_input_start(GameState* gameState, Timer* end_timer);
 
 /**
  * Processes user inputs to control the game state and the bird's movement.

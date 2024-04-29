@@ -24,7 +24,7 @@ typedef struct Text {
  * @return int Returns TRUE if the window and renderer were successfully
  * created, FALSE otherwise.
  */
-int initialize_window(GameState* gameState);
+Boolean initialize_window(GameState* gameState);
 
 /**
  * Render the game state to the screen.
@@ -58,6 +58,8 @@ void render_start(GameState* gameState);
 void render_text(GameState* gameState, Text* text);
 
 void render_score(GameState* gameState, Text* text);
+
+void render_high_score(GameState* gameState);
 
 /**
  * Destroy the SDL window and renderer and clean up SDL subsystems.

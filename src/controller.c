@@ -1,25 +1,29 @@
-#include <SDL2/SDL.h>
 #include "controller.h"
 
-void process_input_start(GameState* gameState, Bird* bird, Pipes* pipes,
-                         Ground* ground, Timer* timer) {
-  SDL_Event event;
-  SDL_PollEvent(&event);
-  switch (event.type) {
-    case SDL_QUIT:
-      gameState->running = FALSE;
-      break;
-    case SDL_KEYDOWN:
-      switch (event.key.keysym.sym) {
-        // quit the program on escape key press
-        case SDLK_ESCAPE:
-          gameState->running = FALSE;
-          break;
-        case SDLK_SPACE:
-          reset_gameplay(gameState, bird, pipes, ground, timer);
-          break;
-      }
-      break;
+#include <SDL2/SDL.h>
+
+void process_input_start(GameState* gameState, Timer* end_timer) {
+  if ((SDL_GetTicks() - end_timer->startTime > end_timer->ms) &&
+      end_timer->timerOn == TRUE) {
+    SDL_Event event;
+    SDL_PollEvent(&event);
+    switch (event.type) {
+      case SDL_QUIT:
+        gameState->running = FALSE;
+        break;
+      case SDL_KEYDOWN:
+        switch (event.key.keysym.sym) {
+          // quit the program on escape key press
+          case SDLK_ESCAPE:
+            gameState->running = FALSE;
+            break;
+          case SDLK_SPACE:
+            gameState->playing = TRUE;
+            end_timer->timerOn = FALSE;
+            break;
+        }
+        break;
+    }
   }
 }
 

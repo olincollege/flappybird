@@ -47,28 +47,28 @@ extern const float UPDATE_GAMESPEED;  // Speed increase per point scored
 typedef struct GameState {
   SDL_Window* window;      // SDL Window for rendering
   SDL_Renderer* renderer;  // SDL Renderer associated with the window
-  int running;             // Game running state flag (boolean)
+  Boolean running;         // Game running state flag (boolean)
   int score;               // Current score
   float gameSpeedx;        // Horizontal speed of game elements like pipes
-  int playing;             // Is the game currently active (boolean)
+  Boolean playing;         // Is the game currently active (boolean)
   int highScore;           // Record of the highest score achieved
 } GameState;
 
 // Bird structure, represents the player's character
 typedef struct Bird {
-  int x;         // Horizontal position of the bird
-  float y;       // Vertical position of the bird
-  int width;     // Width of the bird
-  int height;    // Height of the bird
-  float y_vel;   // Current vertical velocity of the bird
-  int jumpBool;  // Is the bird currently jumping (boolean)
+  int x;             // Horizontal position of the bird
+  float y;           // Vertical position of the bird
+  int width;         // Width of the bird
+  int height;        // Height of the bird
+  float y_vel;       // Current vertical velocity of the bird
+  Boolean jumpBool;  // Is the bird currently jumping (boolean)
 } Bird;
 
 // Timer structure for managing time-dependent events
 typedef struct Timer {
   Uint32 startTime;  // Start time of the timer
   float ms;          // Duration for the timer in milliseconds
-  int timerOn;       // Timer active state (boolean)
+  Boolean timerOn;   // Timer active state (boolean)
 } Timer;
 
 // Ground block structure, represents one horizontal block of the ground
@@ -92,16 +92,15 @@ typedef struct Pipe {
   float bottomHeight;  // Height from the bottom of the screen to the top of the
                        // bottom pipe
   int width;           // Width of the pipe (common for top and bottom parts)
-  float min_gap;  // Minimum gap between the top and bottom pipes (derived from
-                  // PIPE_GAP)
-  int passed;     // Has the bird passed this pipe (for scoring)
+  float min_gap;   // Minimum gap between the top and bottom pipes (derived from
+                   // PIPE_GAP)
+  Boolean passed;  // Has the bird passed this pipe (for scoring)
 } Pipe;
 
 // Pipes structure, contains all pipes (obstacles)
 typedef struct Pipes {
   Pipe pipe[NUM_PIPES];  // Array of pipes
 } Pipes;
-
 
 /**
  * Initialize the game state with default values.
@@ -237,8 +236,9 @@ void update_score(GameState* gameState, Pipes* pipes, Bird* bird);
  *
  * @param gameState A pointer to the GameState.
  * @param bird The Bird structure to check for boundary collisions.
+ * @return TRUE if no collisions, FALSE if a collision has been detected.
  */
-void check_boundaries(GameState* gameState, Bird bird);
+Boolean check_boundaries(GameState* gameState, Bird* bird, Timer* end_timer);
 
 /**
  * Detect collisions between the bird and pipes.
@@ -254,8 +254,10 @@ void check_boundaries(GameState* gameState, Bird bird);
  * character.
  * @param pipes The Pipes structure containing all pipes to check against the
  * bird.
+ * @return TRUE if no collisions, FALSE if a collision has been detected.
  */
-void pipe_collision(GameState* gameState, Bird bird, Pipes pipes);
+Boolean pipe_collision(GameState* gameState, Bird* bird, Pipes* pipes,
+                       Timer* end_timer);
 
 /**
  * Increase the game's difficulty by speeding up the game elements.
