@@ -1,5 +1,6 @@
 #include <criterion/criterion.h>
 #include <criterion/new/assert.h>
+
 #include "../src/model.h"
 
 // NOLINTBEGIN(*-magic-numbers)
@@ -29,7 +30,9 @@ Test(boundary_tests, bird_at_bottom_boundary) {
     
     // Initialize game state and bird
     gameState.playing = TRUE;
-    bird.y = WINDOW_HEIGHT - bird.height; // Bird is at the bottom of the window, assuming bird height
+    int bird_height = 5;
+    bird.height = bird_height;
+    bird.y = (float)(WINDOW_HEIGHT - bird.height); // Bird is at the bottom of the window, assuming bird height
 
     // Call the function
     check_boundaries(&gameState, &bird, &end_timer);
@@ -46,7 +49,7 @@ Test(boundary_tests, bird_within_safe_zone) {
     
     // Initialize game state and bird
     gameState.playing = TRUE;
-    bird.y = WINDOW_HEIGHT / 2; // Bird is safely within the middle of the window
+    bird.y = (float)WINDOW_HEIGHT / 2; // Bird is safely within the middle of the window
 
     // Call the function
     check_boundaries(&gameState, &bird, &end_timer);
