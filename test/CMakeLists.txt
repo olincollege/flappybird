@@ -59,3 +59,14 @@ add_test(
     NAME test_esc_key
     COMMAND test_esc_key ${CRITERION_FLAGS}
 )
+
+add_executable(test_bird test_bird.c)
+target_link_libraries(test_bird
+    PRIVATE model
+    PUBLIC ${CRITERION}
+    ${SDL2_LIBRARIES}
+)
+add_test(
+    NAME test_bird
+    COMMAND test_bird ${CRITERION_FLAGS}
+)
