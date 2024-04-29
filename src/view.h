@@ -2,6 +2,8 @@
 
 #include "model.h"
 
+// NOLINTBEGIN(*-magic-numbers)
+
 typedef struct Text {
   SDL_Texture* texture;
   SDL_Surface* surface;
@@ -72,3 +74,5 @@ void render_high_score(GameState* gameState);
  * renderer to destroy.
  */
 void destroy_window(GameState* gameState);
+
+// NOLINTEND(*-magic-numbers)

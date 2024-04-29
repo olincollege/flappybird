@@ -137,7 +137,7 @@ Boolean check_boundaries(GameState* gameState, Bird* bird, Timer* end_timer) {
     gameState->playing = FALSE;
     end_timer->timerOn = TRUE;
     end_timer->startTime = SDL_GetTicks();
-    end_timer->ms = 1000;
+    end_timer->ms = WINDOW_PAUSE_TIME;
     return FALSE;
   }
   return TRUE;
@@ -164,7 +164,7 @@ Boolean pipe_collision(GameState* gameState, Bird* bird, Pipes* pipes,
       gameState->playing = FALSE;  // Collision detected, stop the game
       end_timer->timerOn = TRUE;
       end_timer->startTime = SDL_GetTicks();
-      end_timer->ms = 1000;
+      end_timer->ms = WINDOW_PAUSE_TIME;
       return FALSE;
     }
   }
