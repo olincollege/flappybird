@@ -48,3 +48,14 @@ add_test(
     NAME test_positions
     COMMAND test_positions ${CRITERION_FLAGS}
 )
+
+add_executable(test_esc_key test_esc_key.c)
+target_link_libraries(test_esc_key
+    PRIVATE model controller view
+    PUBLIC ${CRITERION}
+    ${SDL2_LIBRARIES}
+)
+add_test(
+    NAME test_esc_key
+    COMMAND test_esc_key ${CRITERION_FLAGS}
+)
