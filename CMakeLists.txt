@@ -2,18 +2,6 @@
 # of Ubuntu, which at the time of writing is 22.04.
 cmake_minimum_required(VERSION 3.22)
 
-# include(FetchContent)
-
-# FetchContent_Declare(ttf
-#   GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf.git
-#   GIT_TAG        4a318f8dfaa1bb6f10e0c5e54052e25d3c7f3440
-# )
-
-# FetchContent_GetProperties(ttf)
-# if(NOT ttf_POPULATED)
-#   FetchContent_Populate(ttf)
-#   add_subdirectory(${ttf_SOURCE_DIR} ${ttf_BINARY_DIR})
-# endif()
 
 # TODO: Define a good project in the line below. If applicable, list other
 # languages in this project managed by CMake.
@@ -51,7 +39,6 @@ set(CMAKE_C_CLANG_TIDY "clang-tidy")
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
-# Find SDL2_ttf
 
 # Include the source files.
 add_subdirectory(src)
