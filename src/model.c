@@ -8,7 +8,7 @@ const float GRAVITY = (float)0.05;
 // Initial horizontal speed of the game (i.e., speed of moving obstacles).
 const float START_GAMESPEED = (float)0.1;
 // Incremental increase in game speed each time a new point is scored.
-const float UPDATE_GAMESPEED = (float)0.1;
+const float UPDATE_GAMESPEED = (float)0.05;
 
 void init_gameState(GameState* gameState) {
   gameState->window = NULL;    // Will be set when creating a window
@@ -104,7 +104,7 @@ void update_pipes(GameState* gameState, Pipes* pipes) {
     if (pipes->pipe[i].x + (float)pipes->pipe[i].width < 0) {
       // int next_index = (i == NUM_PIPES - 1) ? 0 : i + 1;
       // float rightMostX = pipes->pipe[next_index].x;
-      pipes->pipe[i].x = WINDOW_WIDTH;
+      pipes->pipe[i].x = WINDOW_WIDTH + 1;
       // Randomly re-generate the heights for the recycled pipe
       pipes->pipe[i].topHeight =
           (float)(rand() % (WINDOW_HEIGHT - 2 * MIN_PIPE_HEIGHT - PIPE_GAP)) +
@@ -174,6 +174,5 @@ Boolean pipe_collision(GameState* gameState, Bird* bird, Pipes* pipes,
 void increase_speed(GameState* gameState, Bird* bird) {
   if (gameState->score % 2 == 0 && gameState->score != 0) {
     gameState->gameSpeedx += UPDATE_GAMESPEED;
-    bird->y_vel += UPDATE_GAMESPEED;
   }
 }
