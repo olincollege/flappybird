@@ -17,7 +17,8 @@ enum {
  *
  * @param gameState A pointer to the GameState to update the running state and
  * possibly start the game.
- * @param timer A pointer to the Timer to display the start page for at least two seconds.
+ * @param timer A pointer to the Timer to display the start page for at least
+ * two seconds.
  */
 void process_input_start(GameState* gameState, Timer* end_timer);
 

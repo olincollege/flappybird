@@ -3,7 +3,7 @@
 #include <SDL2/SDL.h>
 
 void process_input_start(GameState* gameState, Timer* end_timer) {
-  if ((SDL_GetTicks() - end_timer->startTime > end_timer->ms) &&
+  if ((SDL_GetTicks() - end_timer->startTime > (unsigned int)end_timer->ms) &&
       end_timer->timerOn == TRUE) {
     SDL_Event event;
     SDL_PollEvent(&event);

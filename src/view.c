@@ -100,6 +100,9 @@ void render_start(GameState* gameState) {
   Text start_message;
   char temp_text[40] = "Press SPACE to begin/jump & ESC to exit";
   strcpy(start_message.text, temp_text);
+  // strlcpy(start_message.text, temp_text, sizeof(start_message.text));
+  // strncpy(start_message.text, temp_text, sizeof(start_message.text) - 1);
+  // start_message.text[sizeof(start_message.text) - 1] = '\0';
   start_message.x = WINDOW_WIDTH / 2;
   start_message.y = WINDOW_HEIGHT / 2;
   render_text(gameState, &start_message);
@@ -124,9 +127,14 @@ void render_text(GameState* gameState, Text* text) {
 
 void render_score(GameState* gameState, Text* text) {
   char score[50];
-  sprintf(score, "%i", gameState->score);
+  // sprintf(score, "%i", gameState->score);
+  // snprintf(score, sizeof(score), "%i",
+  //          gameState->score);  // safer alternative to sprintf
+  (void)snprintf(score, sizeof(score), "%i",
+                 gameState->score);  // safer alternative to sprintf, cast to
+                                     // void to silence warning
   char your_score[50] = "Your Score: ";
-  strcat(&your_score, &score);
+  strcat(your_score, score);
   strcpy(text->text, your_score);
   text->x = WINDOW_WIDTH - 130;
   text->y = 50;
@@ -138,7 +146,7 @@ void render_high_score(GameState* gameState) {
   char high_score[50];
   sprintf(high_score, "%i", gameState->highScore);
   char temp_text[40] = "High Score: ";
-  strcat(&temp_text, &high_score);
+  strcat(temp_text, high_score);
   strcpy(high_score_message.text, temp_text);
   high_score_message.x = WINDOW_WIDTH / 2;
   high_score_message.y = (WINDOW_HEIGHT / 2) + 25;
