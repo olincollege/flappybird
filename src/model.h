@@ -272,4 +272,4 @@ Boolean pipe_collision(GameState* gameState, Bird* bird, Pipes* pipes,
  * @param bird A pointer to the Bird structure where the vertical velocity is
  * increased.
  */
-void increase_speed(GameState* gameState, Bird* bird);
+void increase_speed(GameState* gameState);

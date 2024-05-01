@@ -53,6 +53,7 @@ void init_pipes(Pipes* pipes) {
     pipes->pipe[i].passed = FALSE;
   }
 }
+
 void reset_gameplay(GameState* gameState, Bird* bird, Pipes* pipes,
                     Ground* ground, Timer* timer) {
   if (gameState->score > gameState->highScore) {
@@ -121,7 +122,7 @@ void update_score(GameState* gameState, Pipes* pipes, Bird* bird) {
         !pipes->pipe[i].passed) {
       gameState->score++;            // Increment score
       pipes->pipe[i].passed = TRUE;  // Mark this pipe as passed
-      increase_speed(gameState, bird);
+      increase_speed(gameState);
     }
 
     // Reset the pipe's passed flag if it has moved back to the right side of
@@ -171,7 +172,7 @@ Boolean pipe_collision(GameState* gameState, Bird* bird, Pipes* pipes,
   return TRUE;
 }
 
-void increase_speed(GameState* gameState, Bird* bird) {
+void increase_speed(GameState* gameState) {
   if (gameState->score % 2 == 0 && gameState->score != 0) {
     gameState->gameSpeedx += UPDATE_GAMESPEED;
   }
