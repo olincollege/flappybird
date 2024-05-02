@@ -53,14 +53,14 @@ Test(boundary_tests, bird_at_top_boundary) {
  */
 Test(boundary_tests, bird_at_bottom_boundary) {
   GameState gameState;
-  Bird bird;
+  Bird bird = {.height = 4};
   Timer end_timer;
 
   // Initialize game state and bird
   gameState.playing = TRUE;
   bird.y =
-      WINDOW_HEIGHT -
-      bird.height;  // Bird is at the bottom of the window, assuming bird height
+      (float)(WINDOW_HEIGHT - bird.height);  // Bird is at the bottom of the
+                                             // window, assuming bird height
 
   // Call the function
   check_boundaries(&gameState, &bird, &end_timer);
@@ -68,7 +68,6 @@ Test(boundary_tests, bird_at_bottom_boundary) {
   // Assert that the game is no longer playing
   cr_assert_not(gameState.playing,
                 "Game should end if bird touches the bottom boundary.");
-
 }
 
 /**
@@ -87,12 +86,15 @@ Test(boundary_tests, bird_at_bottom_boundary) {
  */
 Test(boundary_tests, bird_within_safe_zone) {
   GameState gameState;
-  Bird bird;
+  Bird bird = {.x = 40};
   Timer end_timer;
+
+  // Bird bird = {.x = 0, .y = 0, .width = 42, .height = 4, .y_vel = 42,
+  // .jumpBool = True};
 
   // Initialize game state and bird
   gameState.playing = TRUE;
-  bird.y = WINDOW_HEIGHT / 2;  // Bird is safely within the middle of the window
+  bird.y = (float) WINDOW_HEIGHT / (float) 2;  // Bird is safely within the middle of the window
 
   // Call the function
   check_boundaries(&gameState, &bird, &end_timer);

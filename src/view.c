@@ -144,7 +144,7 @@ void render_score(GameState* gameState, Text* text) {
 void render_high_score(GameState* gameState) {
   Text high_score_message;
   char high_score[50];
-  sprintf(high_score, "%i", gameState->highScore);
+  (void)sprintf(high_score, "%i", gameState->highScore);
   char temp_text[40] = "High Score: ";
   strcat(temp_text, high_score);
   strcpy(high_score_message.text, temp_text);

@@ -40,7 +40,7 @@ add_test(
 
 add_executable(test_positions test_positions.c)
 target_link_libraries(test_positions
-    PRIVATE model
+    PRIVATE model m
     PUBLIC ${CRITERION}
     ${SDL2_LIBRARIES}
 )
