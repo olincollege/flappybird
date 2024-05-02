@@ -56,6 +56,7 @@ typedef struct GameState {
   int highScore;           // Record of the highest score achieved
 } GameState;
 
+
 // Bird structure, represents the player's character
 typedef struct Bird {
   int x;             // Horizontal position of the bird

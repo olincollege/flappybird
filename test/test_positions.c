@@ -36,8 +36,9 @@ Test(bird_position_tests, bird_drop) {
 
   update_bird(&timer, &bird);
 
+  // ieee_ulp_eq(flt, bird.y, 25.05, 4);
   cr_assert(
-      fabs(bird.y - 25.05 < 0.01),
+      ieee_ulp_eq(flt, bird.y, 25.05, 4),
       "Bird should drop by the specified amount when update_bird is called");
 }
 
@@ -70,7 +71,7 @@ Test(bird_position_tests, bird_jump) {
   update_bird(&timer, &bird);
 
   cr_assert(
-      fabs(bird.y - 15 < 0.01),
+      ieee_ulp_eq(flt, bird.y, 14, 4),
       "Bird should jump by the specified amount when update_bird is called");
 }
 
@@ -107,9 +108,9 @@ Test(pipe_position_tests, pipe_shift) {
 
   update_pipes(&gameState, &pipes);
 
-  cr_assert(fabs(pipes.pipe[0].x - 470 < 0.01),
-            "Pipe should move by the specified amount when update_pipe is "
-            "called");
+
+  cr_assert(ieee_ulp_eq(flt, pipes.pipe[0].x, 470, 4),
+            "Pipe should move by the specified amount when update_pipe is called");
 }
 
 // NOLINTEND(*-magic-numbers)

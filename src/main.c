@@ -7,11 +7,11 @@
 #include "model.h"
 #include "view.h"
 
-GameState gameState;
-Bird bird;
-Timer timer;
-Ground ground;
-Pipes pipes;
+// GameState gameState;
+// Bird bird;
+// Timer timer;
+// Ground ground;
+// Pipes pipes;
 
 /**
  * The main entry point for the Flappy Bird game.
@@ -28,6 +28,11 @@ Pipes pipes;
  * another error code otherwise.
  */
 int main() {
+  GameState gameState;
+  Bird bird;
+  Timer timer;
+  Ground ground;
+  Pipes pipes;
   // Initialize game state and game elements
   init_gameState(&gameState);
   setup_inits(&bird, &ground, &pipes);

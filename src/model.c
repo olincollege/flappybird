@@ -39,7 +39,7 @@ void init_ground(Ground* ground) {
 }
 
 void init_pipes(Pipes* pipes) {
-  unsigned int seed = (unsigned int)SDL_GetTicks;
+  unsigned int seed = (unsigned int)SDL_GetTicks();
   float initialX = WINDOW_WIDTH;
   for (int i = 0; i < NUM_PIPES; i++) {
     pipes->pipe[i].x = initialX + (float)i * PIPE_SPACING;
@@ -108,6 +108,8 @@ void update_pipes(GameState* gameState, Pipes* pipes) {
       pipes->pipe[i].x = WINDOW_WIDTH + 1;
       // Randomly re-generate the heights for the recycled pipe
       pipes->pipe[i].topHeight =
+      // Ignoring not thread safe warnings for rand because we are not using multiple threads
+      // NOLINTNEXTLINE(cert-msc30-c, concurrency-mt-unsafe)
           (float)(rand() % (WINDOW_HEIGHT - 2 * MIN_PIPE_HEIGHT - PIPE_GAP)) +
           MIN_PIPE_HEIGHT;
       pipes->pipe[i].bottomHeight = pipes->pipe[i].topHeight + PIPE_GAP;
