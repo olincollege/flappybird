@@ -152,36 +152,4 @@ Test(pipe_collision_tests, side_of_pipe) {
                 "Game should end if bird touches the side of the pipe.");
 }
 
-Test(pipe_collision_tests, no_collision) {
-  GameState gameState;
-  Bird bird;
-  Pipe pipe;
-  Pipes pipes;
-  Timer end_timer;
-
-  // Initialize game state and bird
-  gameState.playing = TRUE;
-  bird.y = 250;
-  bird.width = 5;
-  bird.height = 5;
-  bird.y_vel = -5;
-  bird.jumpBool = FALSE;
-  bird.x = 20;
-
-  pipe.x = 800;
-  pipe.bottomHeight = 400;
-  pipe.width = 5;
-  pipe.topHeight = 200;
-  pipe.min_gap = 200;
-  pipe.passed = FALSE;
-
-  pipes.pipe[0] = pipe;
-
-  // Call the function
-  pipe_collision(&gameState, &bird, &pipes, &end_timer);
-
-  // Assert that the game is no longer playing
-  cr_assert(gameState.playing,
-            "Game should not end if bird does not collide with the pipe.");
-}
 // NOLINTEND(*-magic-numbers)

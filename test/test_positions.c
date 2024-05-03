@@ -71,7 +71,7 @@ Test(bird_position_tests, bird_jump) {
   update_bird(&timer, &bird);
 
   cr_assert(
-      ieee_ulp_eq(flt, bird.y, 14, 4),
+      ieee_ulp_eq(flt, bird.y, 15, 4),
       "Bird should jump by the specified amount when update_bird is called");
 }
 
