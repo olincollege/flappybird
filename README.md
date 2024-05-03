@@ -23,7 +23,7 @@ The SDL Text Library works in conjunction with the SDL Library to render text us
 Note that the SDL library may not work properly on a virtual machine.
 
 ## How to Run
-The first thing you'll need to do is change the file path in the view.c folder on line 112. Run the following in the terminal, and then replace the file path in the TTF_OpenFont function with yours. 
+The first thing you'll need to do is change the file path in the view.c file on line 112. Run the following in the terminal, and then replace the file path in the TTF_OpenFont function with yours. 
 ```
 fc-list | grep DejaVu
 ```
