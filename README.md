@@ -23,6 +23,11 @@ The SDL Text Library works in conjunction with the SDL Library to render text us
 Note that the SDL library may not work properly on a virtual machine.
 
 ## How to Run
+The first thing you'll need to do is change the file path in the view.c folder on line 112. Run the following in the terminal, and then replace the file path in the TTF_OpenFont function with yours. 
+```
+fc-list | grep DejaVu
+```
+
 This project is compiled and run using CMake. If this is your first time playing, you will need to compile the code into a build folder. Starting in the main directory, enter the following commands to create the build folder and run cmake.
 ```
 mkdir build
