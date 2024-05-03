@@ -1,7 +1,7 @@
 #include <criterion/criterion.h>
 #include <criterion/new/assert.h>
 
-#include "../src/model.h"  // Assuming the Bird structure and init functions are defined here
+#include "../src/model.h"
 
 // NOLINTBEGIN(*-magic-numbers)
 
@@ -13,7 +13,7 @@
  * jump. It sets the bird's `jumpBool` flag to TRUE, indicating that a jump
  * is in progress.
  *
- * @param bird Pointer to the Bird struct that needs to perform the jump.
+ * @param bird A pointer to the Bird struct that needs to perform the jump.
  */
 void simulate_end_game_jump(Bird* bird) {
   bird->y_vel = -BIRD_VEL;  // Simulate an upward jump
@@ -25,7 +25,7 @@ void simulate_end_game_jump(Bird* bird) {
  *
  * This test function checks whether all properties of the Bird struct are set
  * to their expected default values upon initialization. The expected values are
- * defined by constants such as BIRD_X_POS for the x position.
+ * defined by constants in model.h.
  *
  * @test
  *      - Verify that the bird's x position matches BIRD_X_POS.

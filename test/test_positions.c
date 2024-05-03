@@ -14,7 +14,7 @@
  * This test sets up the bird with an initial vertical position and velocity
  * directed downwards, then calls the `update_bird` function to process the
  * movement. The test checks if the bird's new position after the update
- * reflects the expected drop, accounting for the initial velocity and any
+ * reflects the expected drop, accounting for the initial velocity and the
  * gravity effect included in the `update_bird` function.
  *
  * @test
@@ -108,9 +108,9 @@ Test(pipe_position_tests, pipe_shift) {
 
   update_pipes(&gameState, &pipes);
 
-
-  cr_assert(ieee_ulp_eq(flt, pipes.pipe[0].x, 470, 4),
-            "Pipe should move by the specified amount when update_pipe is called");
+  cr_assert(
+      ieee_ulp_eq(flt, pipes.pipe[0].x, 470, 4),
+      "Pipe should move by the specified amount when update_pipe is called");
 }
 
 // NOLINTEND(*-magic-numbers)

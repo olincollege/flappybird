@@ -3,8 +3,6 @@
 cmake_minimum_required(VERSION 3.22)
 
 
-# TODO: Define a good project in the line below. If applicable, list other
-# languages in this project managed by CMake.
 project(ProjectTitle
   VERSION 1.0
   LANGUAGES C
@@ -35,10 +33,9 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 # instead. If that file is not present, clang-tidy will be of limited help.
 set(CMAKE_C_CLANG_TIDY "clang-tidy")
 
-# Adding SDL2 and SDL package
+# Adding SDL2 package
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
-
 
 # Include the source files.
 add_subdirectory(src)
@@ -50,6 +47,7 @@ include(CTest)
 find_library(CRITERION criterion REQUIRED)
 set(CRITERION_FLAGS --verbose -j1)
 
+# Include the test files.
 add_subdirectory(test)
 
 

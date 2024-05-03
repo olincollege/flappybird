@@ -1,7 +1,5 @@
 #include "controller.h"
 
-#include <SDL2/SDL.h>
-
 void process_input_start(GameState* gameState, Timer* end_timer) {
   if ((SDL_GetTicks() - end_timer->startTime > (unsigned int)end_timer->ms) &&
       end_timer->timerOn == TRUE) {
@@ -13,7 +11,6 @@ void process_input_start(GameState* gameState, Timer* end_timer) {
         break;
       case SDL_KEYDOWN:
         switch (event.key.keysym.sym) {
-          // quit the program on escape key press
           case SDLK_ESCAPE:
             gameState->running = FALSE;
             break;
@@ -27,7 +24,8 @@ void process_input_start(GameState* gameState, Timer* end_timer) {
   }
 }
 
-void process_input_gameplay(GameState* gameState, Bird* bird, Timer* timer) {
+void process_input_gameplay(GameState* gameState, Bird* bird,
+                            Timer* jump_timer) {
   SDL_Event event;
   SDL_PollEvent(&event);
   switch (event.type) {
@@ -39,7 +37,6 @@ void process_input_gameplay(GameState* gameState, Bird* bird, Timer* timer) {
       break;
     case SDL_KEYDOWN:
       switch (event.key.keysym.sym) {
-        // quit the program on escape key press
         case SDLK_ESCAPE:
           gameState->window = NULL;
           gameState->renderer = NULL;
@@ -47,18 +44,18 @@ void process_input_gameplay(GameState* gameState, Bird* bird, Timer* timer) {
           gameState->running = FALSE;
           break;
         case SDLK_SPACE:
-          jump(bird, timer);
+          jump(bird, jump_timer);
           break;
       }
       break;
   }
 }
 
-void jump(Bird* bird, Timer* timer) {
-  if (timer->timerOn == FALSE) {
+void jump(Bird* bird, Timer* jump_timer) {
+  if (jump_timer->timerOn == FALSE) {
     bird->jumpBool = TRUE;
-    timer->timerOn = TRUE;
-    timer->startTime = SDL_GetTicks();
-    timer->ms = JUMP_TIME;
+    jump_timer->timerOn = TRUE;
+    jump_timer->startTime = SDL_GetTicks();
+    jump_timer->ms = JUMP_TIME;
   }
 }

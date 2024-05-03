@@ -47,7 +47,7 @@ static void setup_esc_test(GameState* gameState, SDL_Event* event) {
 Test(esc_key_tests, esc_keypress_quits_game) {
   GameState gameState;
   SDL_Event event;
-  
+
   // Setup the test environment
   setup_esc_test(&gameState, &event);
 

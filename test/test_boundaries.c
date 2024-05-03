@@ -89,12 +89,10 @@ Test(boundary_tests, bird_within_safe_zone) {
   Bird bird = {.x = 40};
   Timer end_timer;
 
-  // Bird bird = {.x = 0, .y = 0, .width = 42, .height = 4, .y_vel = 42,
-  // .jumpBool = True};
-
   // Initialize game state and bird
   gameState.playing = TRUE;
-  bird.y = (float) WINDOW_HEIGHT / (float) 2;  // Bird is safely within the middle of the window
+  bird.y = (float)WINDOW_HEIGHT /
+           (float)2;  // Bird is safely within the middle of the window
 
   // Call the function
   check_boundaries(&gameState, &bird, &end_timer);

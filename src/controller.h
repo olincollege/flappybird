@@ -8,17 +8,15 @@ enum {
 };
 
 /**
- * Handles the initial game setup and the transition from the start menu to the
- * game.
+ * Handles the transition from the start menu to game play.
  *
  * This function waits for a 'SPACE' key press to begin the game from the start
- * state, setting up the game elements using `reset`. It also handles the
- * 'SDL_QUIT' and 'ESCAPE' keys to quit the game.
+ * state. It also handles the 'SDL_QUIT' and 'ESCAPE' keys to quit the game.
  *
  * @param gameState A pointer to the GameState to update the running state and
  * possibly start the game.
- * @param timer A pointer to the Timer to display the start page for at least
- * two seconds.
+ * @param end_timer A pointer to the Timer to display the start page for at
+ * least two seconds.
  */
 void process_input_start(GameState* gameState, Timer* end_timer);
 
@@ -33,9 +31,10 @@ void process_input_start(GameState* gameState, Timer* end_timer);
  *
  * @param gameState A pointer to the GameState to update the game's status.
  * @param bird A pointer to the Bird object to potentially initiate a jump.
- * @param timer A pointer to the Timer used to manage jump timing.
+ * @param jump_timer A pointer to the Timer used to manage jump timing.
  */
-void process_input_gameplay(GameState* gameState, Bird* bird, Timer* timer);
+void process_input_gameplay(GameState* gameState, Bird* bird,
+                            Timer* jump_timer);
 
 /**
  * Causes the bird to jump if not already in the middle of a jump.
@@ -45,6 +44,6 @@ void process_input_gameplay(GameState* gameState, Bird* bird, Timer* timer);
  * count. The jump affects the bird's vertical movement in the update function.
  *
  * @param bird A pointer to the Bird structure to modify its jumping state.
- * @param timer A pointer to the Timer structure to start the jump timing.
+ * @param jump_timer A pointer to the Timer structure to start the jump timing.
  */
-void jump(Bird* bird, Timer* timer);
+void jump(Bird* bird, Timer* jump_timer);
