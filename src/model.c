@@ -2,7 +2,6 @@
 
 // Initial vertical velocity of the bird, controls how fast it rises on a jump.
 const float BIRD_VEL = (float)0.15;
-
 // Acceleration due to "gravity", applies a downward force to the bird's flight.
 const float GRAVITY = (float)0.05;
 // Initial horizontal speed of the game (i.e., speed of moving obstacles).
@@ -13,7 +12,7 @@ const float UPDATE_GAMESPEED = (float)0.05;
 void init_gameState(GameState* gameState) {
   gameState->window = NULL;    // Will be set when creating a window
   gameState->renderer = NULL;  // Will be set when creating a renderer
-  gameState->running = TRUE;   // Gamestate is now running
+  gameState->running = TRUE;
   gameState->score = 0;
   gameState->gameSpeedx = START_GAMESPEED;
   gameState->playing = FALSE;
@@ -34,7 +33,6 @@ void init_ground(Ground* ground) {
     ground->blocks[i].y = WINDOW_HEIGHT - BLOCK_HEIGHT;
     ground->blocks[i].width = BLOCK_WIDTH;
     ground->blocks[i].height = BLOCK_HEIGHT;
-    // Optional: Set different colors or textures
   }
 }
 
@@ -43,7 +41,7 @@ void init_pipes(Pipes* pipes) {
   float initialX = WINDOW_WIDTH;
   for (int i = 0; i < NUM_PIPES; i++) {
     pipes->pipe[i].x = initialX + (float)i * PIPE_SPACING;
-    // Generate random heights for top and calculate bottom pipe start
+    // Generate random heights for top and calculate bottom pipe position.
     pipes->pipe[i].topHeight =
         (float)(rand_r(&seed) %
                 (WINDOW_HEIGHT - 2 * MIN_PIPE_HEIGHT - PIPE_GAP)) +
@@ -55,14 +53,14 @@ void init_pipes(Pipes* pipes) {
 }
 
 void reset_gameplay(GameState* gameState, Bird* bird, Pipes* pipes,
-                    Ground* ground, Timer* timer) {
+                    Ground* ground, Timer* jump_timer) {
   if (gameState->score > gameState->highScore) {
     gameState->highScore = gameState->score;
   }
   gameState->score = 0;
   gameState->gameSpeedx = START_GAMESPEED;
   setup_inits(bird, ground, pipes);
-  timer->timerOn = FALSE;
+  jump_timer->timerOn = FALSE;
 }
 
 void setup_inits(Bird* bird, Ground* ground, Pipes* pipes) {
@@ -71,18 +69,18 @@ void setup_inits(Bird* bird, Ground* ground, Pipes* pipes) {
   init_pipes(pipes);
 }
 
-void update_bird(Timer* timer, Bird* bird) {
+void update_bird(Timer* jump_timer, Bird* bird) {
   if (bird->jumpBool == TRUE) {
     bird->y -= bird->y_vel;
   } else {
     bird->y += GRAVITY + bird->y_vel;
   }
 
-  if ((timer->timerOn == TRUE) &&
-      (SDL_GetTicks() - timer->startTime) >
-          (Uint32)(timer->ms)) {  // Convert to Uint32
+  if ((jump_timer->timerOn == TRUE) &&
+      (SDL_GetTicks() - jump_timer->startTime) >
+          (Uint32)(jump_timer->ms)) {  // Convert to Uint32
     bird->jumpBool = FALSE;
-    timer->timerOn = FALSE;
+    jump_timer->timerOn = FALSE;
   }
 }
 
@@ -103,13 +101,12 @@ void update_pipes(GameState* gameState, Pipes* pipes) {
 
     // Check if pipe has moved past the left edge of the screen
     if (pipes->pipe[i].x + (float)pipes->pipe[i].width < 0) {
-      // int next_index = (i == NUM_PIPES - 1) ? 0 : i + 1;
-      // float rightMostX = pipes->pipe[next_index].x;
       pipes->pipe[i].x = WINDOW_WIDTH + 1;
       // Randomly re-generate the heights for the recycled pipe
       pipes->pipe[i].topHeight =
-      // Ignoring not thread safe warnings for rand because we are not using multiple threads
-      // NOLINTNEXTLINE(cert-msc30-c, concurrency-mt-unsafe)
+          // Ignoring not thread safe warnings for rand because we are not using
+          // multiple threads.
+          // NOLINTNEXTLINE(cert-msc30-c, concurrency-mt-unsafe)
           (float)(rand() % (WINDOW_HEIGHT - 2 * MIN_PIPE_HEIGHT - PIPE_GAP)) +
           MIN_PIPE_HEIGHT;
       pipes->pipe[i].bottomHeight = pipes->pipe[i].topHeight + PIPE_GAP;

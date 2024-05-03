@@ -10,7 +10,7 @@
  * bottom of the top pipe.
  *
  * This test initializes the game state and bird's position to simulate a
- * scenario where the bird is positioned at the exact top edge of a top pipe.
+ * scenario where the bird is positioned at the exact bottom edge of a top pipe.
  * The test checks if the collision detection function correctly identifies this
  * position as a collision, resulting in the game ending.
  *
@@ -59,7 +59,7 @@ Test(pipe_collision_tests, bottom_of_top_pipe) {
  * of the bottom pipe.
  *
  * This test sets up the game state and bird's position to simulate a scenario
- * where the bird is positioned at the exact bottom edge of a bottom pipe. It
+ * where the bird is positioned at the exact top edge of a bottom pipe. It
  * checks if the collision detection function correctly identifies this position
  * as a collision, resulting in the game ending.
  *

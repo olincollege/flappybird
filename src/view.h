@@ -23,7 +23,7 @@ typedef struct Text {
  *
  * @param gameState A pointer to the GameState where the window and renderer are
  * stored.
- * @return int Returns TRUE if the window and renderer were successfully
+ * @return Returns TRUE if the window and renderer were successfully
  * created, FALSE otherwise.
  */
 Boolean initialize_window(GameState* gameState);
@@ -37,14 +37,15 @@ Boolean initialize_window(GameState* gameState);
  *
  * @param gameState A pointer to the GameState containing the renderer and other
  * game state information.
- * @param bird The Bird structure containing the bird's properties to be
+ * @param bird A pointer to the Bird structure containing the bird's properties
+ * to be rendered.
+ * @param ground A pointer to the Ground structure containing the ground blocks
+ * to be rendered.
+ * @param pipes A pointer ot the Pipes structure containing the pipes to be
  * rendered.
- * @param ground The Ground structure containing the ground blocks to be
- * rendered.
- * @param pipes The Pipes structure containing the pipes to be rendered.
  */
-void render_gameplay(GameState* gameState, Bird bird, Ground ground,
-                     Pipes pipes);
+void render_gameplay(GameState* gameState, Bird* bird, Ground* ground,
+                     Pipes* pipes);
 
 /**
  * Render the start screen of the game.
@@ -57,10 +58,37 @@ void render_gameplay(GameState* gameState, Bird bird, Ground ground,
  */
 void render_start(GameState* gameState);
 
+/**
+ * Render text on the screen.
+ *
+ * This function is called to render text on the screen based on variables in
+ * the Text struct.
+ *
+ * @param gameState A pointer to the GameState containing the renderer.
+ * @param text A pointer to the Text struct containing the text to render and
+ * its position.
+ */
 void render_text(GameState* gameState, Text* text);
 
+/**
+ * Render the score on the top right of the screen.
+ *
+ * This function is called to render the score on the screen.
+ *
+ * @param gameState A pointer to the GameState containing the renderer.
+ * @param text A pointer to the Text struct containing the text to render and
+ * its position.
+ */
 void render_score(GameState* gameState, Text* text);
 
+/**
+ * Render the high score on the start screen before/after each game.
+ *
+ * This function is called to render the high score on the start screen.
+ *
+ * @param gameState A pointer to the GameState containing the renderer and the
+ * high score.
+ */
 void render_high_score(GameState* gameState);
 
 /**

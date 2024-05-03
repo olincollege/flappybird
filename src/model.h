@@ -5,15 +5,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define Boolean type for better readability.
+// Define Boolean type.
 typedef enum { FALSE, TRUE } Boolean;
 
-// Set fixed dimensions for the game window
+// Set fixed dimensions for the game window.
 enum { WINDOW_WIDTH = 1200, WINDOW_HEIGHT = 1000 };
 
-enum {WINDOW_PAUSE_TIME = 1000};
+enum { WINDOW_PAUSE_TIME = 1000 };
 
-// Bird's starting position and size
+// Bird's starting position and size.
 enum {
   BIRD_X_POS = 20,  // Horizontal start position of the bird
   BIRD_Y_POS = 20,  // Vertical start position of the bird
@@ -21,14 +21,14 @@ enum {
   BIRD_HEIGHT = 15  // Height of the bird
 };
 
-// Ground blocks settings, defining how many and their dimensions
+// Ground blocks settings, defining how many and their dimensions.
 enum {
   NUM_BLOCKS = 14,    // Number of ground blocks
   BLOCK_HEIGHT = 50,  // Height of each ground block
   BLOCK_WIDTH = 100   // Width of each ground block
 };
 
-// Pipes configuration for the obstacles
+// Pipes configuration for the obstacles.
 enum {
   NUM_PIPES = 4,       // Number of pipes, i.e., pairs of obstacles
   PIPE_SPACING = 300,  // Horizontal distance between consecutive pipes
@@ -56,8 +56,7 @@ typedef struct GameState {
   int highScore;           // Record of the highest score achieved
 } GameState;
 
-
-// Bird structure, represents the player's character
+// Bird structure, represents the player's character.
 typedef struct Bird {
   int x;             // Horizontal position of the bird
   float y;           // Vertical position of the bird
@@ -67,14 +66,15 @@ typedef struct Bird {
   Boolean jumpBool;  // Is the bird currently jumping (boolean)
 } Bird;
 
-// Timer structure for managing time-dependent events
+// Timer structure for managing time-dependent events. Used for the jump timer
+// and end timer.
 typedef struct Timer {
   Uint32 startTime;  // Start time of the timer
   float ms;          // Duration for the timer in milliseconds
   Boolean timerOn;   // Timer active state (boolean)
 } Timer;
 
-// Ground block structure, represents one horizontal block of the ground
+// Ground block structure, represents one horizontal block of the ground.
 typedef struct GroundBlock {
   float x;     // Horizontal position of the ground block
   float y;     // Vertical position of the ground block
@@ -82,12 +82,12 @@ typedef struct GroundBlock {
   int height;  // Height of the ground block
 } GroundBlock;
 
-// Ground structure, contains all ground blocks
+// Ground structure, contains all ground blocks.
 typedef struct Ground {
   GroundBlock blocks[NUM_BLOCKS];  // Array of ground blocks
 } Ground;
 
-// Pipe structure, represents one obstacle consisting of two vertical parts
+// Pipe structure, represents one obstacle consisting of two vertical parts.
 typedef struct Pipe {
   float x;             // Horizontal position of both parts of the pipe
   float topHeight;     // Height from the top of the screen to the bottom of the
@@ -100,7 +100,7 @@ typedef struct Pipe {
   Boolean passed;  // Has the bird passed this pipe (for scoring)
 } Pipe;
 
-// Pipes structure, contains all pipes (obstacles)
+// Pipes structure, contains all pipes (obstacles).
 typedef struct Pipes {
   Pipe pipe[NUM_PIPES];  // Array of pipes
 } Pipes;
@@ -134,8 +134,7 @@ void init_bird(Bird* bird);
  * Each block is positioned side by side with the specified width and height.
  * The ground blocks are decorative and mark the bottom border of the screen.
  *
- * @param ground A pointer to the Ground structure that contains all ground
- * blocks.
+ * @param ground A pointer to the Ground structure to initialize.
  */
 void init_ground(Ground* ground);
 
@@ -143,7 +142,7 @@ void init_ground(Ground* ground);
  * Initialize all pipes with random heights and positions.
  *
  * Pipes are spaced evenly along the horizontal axis and have random heights.
- * This function sets up each pipe's position, size, and the gap between them.
+ * This function sets up each pipe's position and size.
  *
  * @param pipes A pointer to the Pipes structure to initialize.
  */
@@ -160,16 +159,16 @@ void init_pipes(Pipes* pipes);
  * @param bird A pointer to the Bird structure.
  * @param pipes A pointer to the Pipes structure.
  * @param ground A pointer to the Ground structure.
- * @param timer A pointer to the Timer structure.
+ * @param jump_timer A pointer to the Timer structure for the jump timer.
  */
 void reset_gameplay(GameState* gameState, Bird* bird, Pipes* pipes,
-                    Ground* ground, Timer* timer);
+                    Ground* ground, Timer* jump_timer);
 
 /**
  * Setup the initial game configuration.
  *
  * This function is a utility to initialize the bird, ground, and pipes
- * structures. It is typically called when resetting the game.
+ * structures.
  *
  * @param bird A pointer to the Bird structure.
  * @param ground A pointer to the Ground structure.
@@ -180,14 +179,16 @@ void setup_inits(Bird* bird, Ground* ground, Pipes* pipes);
 /**
  * Update the bird's position based on its velocity and gravity.
  *
- * This function adjusts the bird's position by applying gravity and any active
- * jumps. It also updates the jump timer to disable jumping at the right time.
+ * This function adjusts the bird's position by applying gravity when there is
+ * not an active jump and upward velocity when there is an active jump.
+ * It also activates the jump timer used disable additional jumping input for
+ * the duration of the jump.
  *
- * @param timer A pointer to the Timer controlling the jump duration.
+ * @param jump_timer A pointer to the Timer controlling the jump duration.
  * @param bird A pointer to the Bird whose position and velocity are to be
  * updated.
  */
-void update_bird(Timer* timer, Bird* bird);
+void update_bird(Timer* jump_timer, Bird* bird);
 
 /**
  * Update the position of all ground blocks to simulate movement.
@@ -206,8 +207,7 @@ void update_ground(GameState* gameState, Ground* ground);
  * Update the position and status of all pipes to simulate movement.
  *
  * Pipes move left at the game speed, and pipes that exit the left edge of the
- * screen are recycled to the right with new random heights. This function
- * ensures continuous challenges by adjusting pipes positions and heights.
+ * screen are recycled to the right with new random heights.
  *
  * @param gameState A pointer to the GameState containing the game's speed.
  * @param pipes A pointer to the Pipes structure that holds all pipe
@@ -219,8 +219,8 @@ void update_pipes(GameState* gameState, Pipes* pipes);
  * Update the game score based on bird and pipe positions.
  *
  * As the bird passes each pipe, this function increments the score. If the
- * score reaches a certain threshold, it also triggers a speed increase. This
- * function is critical for scoring and game progression.
+ * score reaches a certain threshold, it also triggers an increase in game
+ * speed.
  *
  * @param gameState A pointer to the GameState to update the score.
  * @param pipes A pointer to the Pipes structure to determine if the bird has
@@ -238,7 +238,9 @@ void update_score(GameState* gameState, Pipes* pipes, Bird* bird);
  * to not playing indicating that the game is over.
  *
  * @param gameState A pointer to the GameState.
- * @param bird The Bird structure to check for boundary collisions.
+ * @param bird A pointer to the bird structure.
+ * @param end_timer A pointer to the end timer so that the function can turn it
+ * on if a collision is detected.
  * @return TRUE if no collisions, FALSE if a collision has been detected.
  */
 Boolean check_boundaries(GameState* gameState, Bird* bird, Timer* end_timer);
@@ -253,10 +255,12 @@ Boolean check_boundaries(GameState* gameState, Bird* bird, Timer* end_timer);
  *
  * @param gameState A pointer to the GameState to update the game state upon
  * collision.
- * @param bird The Bird structure (by value) representing the player's
+ * @param bird A pointer to the bird structure representing the player's
  * character.
- * @param pipes The Pipes structure containing all pipes to check against the
- * bird.
+ * @param pipes A pointer to the pipes structure containing all pipes to check
+ * against the bird.
+ * @param end_timer A pointer to the end timer so that the function can turn it
+ * on if a collision is detected.
  * @return TRUE if no collisions, FALSE if a collision has been detected.
  */
 Boolean pipe_collision(GameState* gameState, Bird* bird, Pipes* pipes,
@@ -270,7 +274,5 @@ Boolean pipe_collision(GameState* gameState, Bird* bird, Pipes* pipes,
  * difficulty.
  *
  * @param gameState A pointer to the GameState where the game speed is adjusted.
- * @param bird A pointer to the Bird structure where the vertical velocity is
- * increased.
  */
 void increase_speed(GameState* gameState);
